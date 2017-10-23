@@ -9,6 +9,8 @@ these dashboards.
 This dashboard provides a summary of current performance of the ICP environment. One should be able to immediatly see what componenets are top 5 consumners of CPU and memeory.
 When importing this dashboard, you will need to change the  Kibaba URL within Dashboard, this covered further down in this document.
 
+[](https://github.ibm.com/CASE/stonehenge/blob/master/resources/media/jmppngs/Jmpsrver5.png)
+
 ## ICP 2.1 Namespace Performance IBM Provided
 ### Current Version 2.5
 This dashboard provides a focus on the namespace memory and CPU performance in your deployment. Just download and import the json file and you are good to go
