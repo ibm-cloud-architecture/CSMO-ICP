@@ -1,4 +1,0 @@
-# ICP 2.1 Performance IBM Provided Performance Dashboard
-## Current Version 2.5
-This dashboard provides a quick view of performance of the ICP deployment. When you import the json to Grafana. as with another Grafana import you will need to specify the prometheus data source. 
-Additionally you'll need to edit in the Kibana URL for your deployment, which is explanined later.
