@@ -15,8 +15,8 @@ This dashboard provides a summary of current performance of the ICP environment.
 
 ![ICPPerformance](ICPperf1.png)
 
-+ Updating the Link to Kibana [Kibana_Link](Edit_Kibana_Link.md)
-+ Dashboard detail [ICP_Peformance](ICP_Performance_Dashboard_Detail.md)
++ Instructions for customizing the Link to Kibana [Kibana_Link](Edit_Kibana_Link.md)
++ Detailed Dashboard Information [ICP_Peformance](ICP_Performance_Dashboard_Detail.md)
 
 ![ICPPerformance](ICPperf1.png)
 
