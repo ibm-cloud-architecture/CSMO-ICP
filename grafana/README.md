@@ -9,6 +9,8 @@ The dashboards can be downloaded via this link [Dashboards](https://github.com/i
 
 #### ICP 2.1 Peformance IBM Provided Dashboard
 ##### Current Version 2.5
+This dashboard provides a summary of current performance of the ICP environment. One should be able to immediatly see what componenets are top 5 consumners of CPU and memeory.
+When importing this dashboard, you will need to change the "dummy" Kibana link to work in your insallation.
 ![ICPPerformance](ICPperf1.png)
 This dashboard provides a summary of current performance of the ICP environment. One should be able to immediatly see what componenets are top 5 consumners of CPU and memeory.
 When importing this dashboard, you will need to change the "dummy" Kibana link to work in your insallation. 
