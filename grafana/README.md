@@ -3,7 +3,7 @@
 We have created a ICP Specific Dashboards for your use. These dashboars are focused on the performance of the ICP deploymnet and the names spaces
 As with any other Grafana import you will need to specify the Prometheus data source. During development the default prometheus data provider was used in creating
 these dashboards.
-
+* Note: It is assumed that you have a working knowledge of Grafana and capable of editing a configuration in the dashbaord. 
 ## ICP 2.1 Peformance IBM Provided
 ### Current Version 2.5
 This dashboard provides a summary of current performance of the ICP environment. One should be able to immediatly see what componenets are top 5 consumners of CPU and memeory.
