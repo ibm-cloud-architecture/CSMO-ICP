@@ -9,7 +9,7 @@ these dashboards.
 This dashboard provides a summary of current performance of the ICP environment. One should be able to immediatly see what componenets are top 5 consumners of CPU and memeory.
 When importing this dashboard, you will need to change the  Kibaba URL within Dashboard, this covered further down in this document.
 
-![ICPPerformance] (ICPperf1.png)
+![ICPPerformance](ICPperf1.png)
 
 ## ICP 2.1 Namespace Performance IBM Provided
 ### Current Version 2.5
