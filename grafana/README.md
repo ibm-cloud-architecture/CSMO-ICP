@@ -16,4 +16,4 @@ When importing this dashboard, you will need to change the  Kibaba URL within Da
 This dashboard provides a focus on the namespace memory and CPU performance in your deployment. Just download and import the json file and you are good to go
 You can switch between namespaces by changed to the desired namespace at the top of the dashboard. You can only view one namespace at a time. 
 
-![ICPnamespacePerformance]ICPnamspperf1.png)
+![ICPnamespacePerformance](ICPnamspperf1.png)
