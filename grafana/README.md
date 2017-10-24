@@ -12,9 +12,9 @@ The dashboards can be downloaded via this link [Dashboards](https://github.com/i
 This dashboard provides a summary of current performance of the ICP environment. One should be able to immediatly see what componenets are top 5 consumners of CPU and memeory.
 When importing this dashboard, you will need to change the  Kibaba URL within Dashboard, this covered further down in this document.
 
-Importing Dashboards [Grafana_Import](GrafanaImport.md)
-Updated the Link to Kibana [KibanaLink](Edit_Kibana_Link.md)
-Dashboard detail [ICP_Peformance](ICPPerformanceDetail.md)
++ Importing Dashboards [Grafana_Import](GrafanaImport.md)
++ Updated the Link to Kibana [KibanaLink](Edit_Kibana_Link.md)
++ Dashboard detail [ICP_Peformance](ICPPerformanceDetail.md)
 
 ![ICPPerformance](ICPperf1.png)
 
