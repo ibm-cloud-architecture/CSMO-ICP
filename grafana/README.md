@@ -6,6 +6,7 @@ As with any other Grafana import you will need to specify the Prometheus data so
 * Note: It is assumed that you have a working knowledge of Grafana and capable of editing a configuration in the dashboard. 
 
 The dashboards can be downloaded via this link [Dashboards](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/grafanaICP.tar.gz)
++ Importing Dashboards [Grafana_Import](Grafana_Import.md)
 
 #### ICP 2.1 Peformance IBM Provided Dashboard
 ##### Current Version 2.5
@@ -13,7 +14,6 @@ This dashboard provides a summary of current performance of the ICP environment.
 
 ![ICPPerformance](ICPperf1.png)
 
-+ Importing Dashboards [Grafana_Import](Grafana_Import.md)
 + Updating the Link to Kibana [Kibana_Link](Edit_Kibana_Link.md)
 + Dashboard detail [ICP_Peformance](ICP_Performance_Dashboard_Detail.md)
 
