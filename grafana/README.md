@@ -14,7 +14,7 @@ When importing this dashboard, you will need to change the "dummy" Kibana link t
 
 + Importing Dashboards [Grafana_Import](Grafana_Import.md)
 + Updating the Link to Kibana [Kibana_Link](Edit_Kibana_Link.md)
-+ Dashboard detail [ICP_Peformance](ICP_Performance_Detail.md)
++ Dashboard detail [ICP_Peformance](ICP_Performance_Dashboard_Detail.md)
 
 ![ICPPerformance](ICPperf1.png)
 
