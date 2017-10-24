@@ -7,8 +7,8 @@ As with any other Grafana import you will need to specify the Prometheus data so
 
 The dashboards can be downloaded via this link [Dashboards](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/grafanaICP.tar.gz)
 
-## ICP 2.1 Peformance IBM Provided Dashboard
-#### Current Version 2.5
+#### ICP 2.1 Peformance IBM Provided Dashboard
+##### Current Version 2.5
 ![ICPPerformance](ICPperf1.png)
 This dashboard provides a summary of current performance of the ICP environment. One should be able to immediatly see what componenets are top 5 consumners of CPU and memeory.
 When importing this dashboard, you will need to change the "dummy" Kibana link to work in your insallation. 
@@ -19,10 +19,10 @@ When importing this dashboard, you will need to change the "dummy" Kibana link t
 
 ![ICPPerformance](ICPperf1.png)
 
-## ICP 2.1 Namespace Performance IBM Provided Dashboard
-#### Current Version 2.5
+####  ICP 2.1 Namespace Performance IBM Provided Dashboard
+##### Current Version 2.5
 This dashboard provides a focus on the namespace memory and CPU performance in your deployment. Just download and import the json file and you are good to go
 You can switch between namespaces by changed to the desired namespace at the top of the dashboard. You can only view one namespace at a time. 
 
 ![ICPnamespacePerformance](ICPnamspperf1.png)
-a
+
