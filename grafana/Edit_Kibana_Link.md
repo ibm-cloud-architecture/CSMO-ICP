@@ -10,8 +10,8 @@ contains a "dummy Link" that requires you to update it with the IP address of yo
 
 4. You will see the Kibana link configured as https://<icp_IP_address>:8443/kibana 
 
-5. Replace the <icp_IP_adderss> with the IP Address of your deployment. They entry should appear similiar to as follows
+5. Replace the <icp_IP_adderss> with the IP Address of your deployment. The entry should appear similiar to as follows
 
 https://192.168.27.100:8443/kibana
 
-6. Make sure to save the dashboard! 
+6. Make sure you save the dashboard! 
