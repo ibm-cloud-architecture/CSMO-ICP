@@ -18,7 +18,6 @@ This dashboard provides a summary of current performance of the ICP environment.
 + Instructions for customizing the Link to Kibana [Kibana_Link](Edit_Kibana_Link.md)
 + Detailed Dashboard Information [ICP_Peformance](ICP_Performance_Dashboard_Detail.md)
 
-![ICPPerformance](ICPperf1.png)
 
 ####  ICP 2.1 Namespace Performance IBM Provided Dashboard
 ##### Current Version 2.5
