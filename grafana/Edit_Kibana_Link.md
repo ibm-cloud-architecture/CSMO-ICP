@@ -10,4 +10,6 @@ Clink on *Links*
 
 You will see the Kibana link configured as https://<icp_IP_address>:8443/kibana 
 
-replace the <icp_IP_adderss> with the IP Address of your deployment. 
+Replace the <icp_IP_adderss> with the IP Address of your deployment. They entry should appear similiar to as follows
+
+https://192.168.27.100:8443/kibana
