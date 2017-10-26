@@ -6,4 +6,4 @@ The upper right of the dashboard contains two links.
 One is the link to Kibana, the second is a Drop-down that allows you to navigate to other
 dashboards.
 
-![ICPPerformancetop](Kibana_Dash.png)
+![ICPPerformancetop](images/Kibana_Dash.png)
