@@ -6,7 +6,7 @@ You will find hints and tips, integration how tos, Grafana Dashboards and more!
 
 As defined in the [Cloud Service Management and Operations reference architecture](https://www.ibm.com/cloud/garage/content/architecture/serviceManagementArchitecture), the primary components of the CSMO toolchain used to implement success service management are the monitoring components which "kick off" the incident management process.
 
-![IncidentManagement Toolchain](images/toolchain.png)
+![IncidentManagement Toolchain](images/toolchain-mon.png)
 
 As of later October, we will concentrate only on the Monitoring & Logging components which are builtin to the Kubernetes component of IBM Cloud Private. We will also discuss integration points with external Event Management solutions such as Netcool Operations Insight.
 
