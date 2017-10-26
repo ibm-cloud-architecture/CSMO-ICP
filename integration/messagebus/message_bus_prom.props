@@ -1,0 +1,129 @@
+########################################################################
+#
+#       Licensed Materials - Property of IBM
+#       
+#       
+#       
+#       (C) Copyright IBM Corp. 2011. All Rights Reserved
+#       
+#       US Government Users Restricted Rights - Use, duplication
+#       or disclosure restricted by GSA ADP Schedule Contract
+#       with IBM Corp.
+#
+#
+#######################################################################
+#############################
+# OMNIbus Properties
+# NOTE: These properties are base properties provided by
+# Omnibus 7.2.1.  It is strongly recommended that you run
+# the probe with -dumpprops to create a list of properties
+# specific to your version and installation. 
+#############################
+#
+# AutoSAF                          : 0
+# BeatThreshold                    : 1
+# BufferSize                       : 10
+# Buffering                        : 0
+# Help                             : 0
+# KeepLastBrokenSAF                : 0
+# LogFilePoolSize                  : 10
+# LogFileUsePool                   : 0
+# LogFileUseStdErr                 : 0
+# LookupTableMode                  : 3
+# Manager                          : 'message_bus'
+# MaxLogFileSize                   : 1048576
+# MaxSAFFileSize                   : 1048576
+# MessageLevel                     : 'debug'
+# MessageLog                       : '$OMNIHOME/log/message_bus.log'
+# MsgDailyLog                      : 0
+# MsgTimeLog                       : '0000'
+# Name                             : 'message_bus'
+# NetworkTimeout                   : 0
+# PidFile                          : '$OMNIHOME/var/message_bus'
+# PollServer                       : 0
+# PropsFile                        : '$OMNIHOME/probes/<arch>/message_bus.props'
+# RawCapture                       : 0
+# RawCaptureFile                   : '$OMNIHOME/var/message_bus.cap'
+# RegexpLibrary                    : 'TRE'
+# RetryConnectionCount             : 15
+# RetryConnectionTimeOut           : 30
+# RulesFile                        : '$OMNIHOME/probes/<arch>/message_bus.rules'
+# SAFFileName                      : '$OMNIHOME/var/message_bus.store'
+# Server                           : 'NCOMS'
+# ServerBackup                     : ''
+# StoreAndForward                  : 1
+# StoreSAFRejects                  : 0
+# UTF8Enabled                      : false
+# Version                          : 0
+#
+#######################################################################
+
+#############################
+# Probe Framework Properties
+#############################
+#
+# DataBackupFile                   : ''
+# HeartbeatInterval                : 1
+# Inactivity                       : 0
+# InitialResync                    : 'false'
+# MaxEventQueueSize                : 0
+# ResyncInterval                   : 0
+# RetryCount                       : 0
+# RetryInterval                    : 0
+# RotateEndpoint                   : 'false'
+#
+#######################################################################
+
+#############################
+# Probe Specific Properties
+#############################
+#
+# Cookie                           : ''
+# EnableSSL                        : 'false'
+# Host                             : ''
+# JsonMessageDepth                 : 3
+# JsonNestedHeader                 : ''
+# JsonNestedPayload                : ''
+# KeyStore                         : ''
+# KeyStorePassword                 : ''
+# MessageHeader                    : ''
+# MessagePayload                   : 'xml'
+# Password                         : ''
+# Port                             : 0
+# RecordData                       : ''
+# StreamCapture                    : 'false'
+# StreamCaptureFile                : '${OMNIHOME}/var/message_bus.stream'
+# TransformerFile                  : '${OMNIHOME}/java/conf/transformers.xml'
+# TransportFile                    : '${OMNIHOME}/java/conf/jmsTransport.properties'
+# TransportType                    : 'JMS'
+# Username                         : ''
+# WebSocketID                      : ''
+#
+#######################################################################
+
+#######################################################################
+#
+# To make alterations to the default value for any properties
+# append the new values here:-
+#######################################################################
+#PROTECTED REGION ID(manualSettings) ENABLED START#
+
+MsgDailyLog                      : 1
+HeartbeatInterval       :       10
+MaxEventQueueSize       :       10
+StoreAndForward         :       0
+PidFile                          : '$OMNIHOME/var/message_bus_prom.pid'
+StreamCaptureFile                : '${OMNIHOME}/var/message_bus_prom.stream'
+MessageLog                       : '$OMNIHOME/log/message_bus_prom.log'
+Name            :       'MessageBus_Prom_Probe'
+RulesFile                        : '$OMNIHOME/probes/linux2x86/message_bus_prom.rules'
+RawCaptureFile                   : '$OMNIHOME/var/message_bus_prom.cap'
+RawCapture      :       1
+MessageLevel    :       'debug'
+StreamCapture   :       'true'
+MessagePayload  :       'json'
+JsonNestedPayload : 'json'
+TransportType   :       'HTTP'
+TransportFile   :       '${OMNIHOME}/java/conf/httpTransport_prom.properties'
+
+#PROTECTED REGION END#

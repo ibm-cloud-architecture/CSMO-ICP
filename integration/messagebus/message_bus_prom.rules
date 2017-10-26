@@ -1,0 +1,75 @@
+########################################################################
+#
+#       Licensed Materials - Property of IBM
+#       
+#       
+#       
+#       (C) Copyright IBM Corp. 2015. All Rights Reserved
+#       
+#       US Government Users Restricted Rights - Use, duplication
+#       or disclosure restricted by GSA ADP Schedule Contract
+#       with IBM Corp.
+#
+#
+#######################################################################
+
+if( match( @Manager, "ProbeWatch" ) )
+{
+	switch(@Summary)
+	{
+	case "Running ...":
+			@Severity = 1
+			@AlertGroup = "probestat"
+			@Type = 2
+	case "Going Down ...":
+			@Severity = 5
+			@AlertGroup = "probestat"
+			@Type = 1
+	case "Start resynchronization" | "Finish resynchronization":
+			@Severity = 2
+			@AlertGroup = "probestat"
+			@Type = 13
+	case "Connection to source lost":
+			@Severity = 5
+			@AlertGroup = "probestat"
+			@Type = 1	
+	default:
+			@Severity = 1
+	}
+	@AlertKey = @Agent
+	@Summary = @Agent + " probe on " + @Node + ": " + @Summary
+}
+else
+{
+	@Manager = %Manager + " probe running on " + hostname()
+	@Node = $Node
+    @NodeAlias = %Host + ":" + %Port
+	
+		log(DEBUG, "<<<<< Entering... message_bus_prometheus.rules >>>>>")
+
+	    @Manager = %Manager
+	    @Class = 10000
+	    @Severity = 3
+	    @LastOccurrence = datetotime($(alerts.0.startsAt),"yyyy-MM-ddTHH:mm:ss.SSSZ")
+                                                           # "2017-09-27T08:22:37.803Z"
+
+            @PhysicalCard = $timestamp
+	    @Location = $location
+	    @Node = $(groupLabels.cluster)
+	    @AlertGroup = $(groupLabels.alertname)
+            @AlertKey = $(alerts.0.labels.severity)
+            @Summary = $(commonAnnotations.DESCRIPTION)
+            if (nmatch($status,'delete')) {@Severity = 0}
+            @URL = $(alerts.0.generatorUrl)
+            @Grade = 0
+            Update (@Summary)
+            Update (@LastOccurrence)
+            Update (@URL)
+            @Identifier = "prometheus_" + @AlertGroup + "_" + @Node + "_" + @AlertKey
+            log(DEBUG, "<<<<< Identifier : " + @Identifier )
+    	    log(DEBUG, "<<<<< Leaving... message_bus_prometheus.rules >>>>>")
+		
+}
+
+details($*)
+    
