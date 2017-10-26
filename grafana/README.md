@@ -10,8 +10,9 @@ The dashboards can be downloaded via the following links: (Right Click and Save)
 This link is a compressed file of all CSMO dashboards [Dashboards](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/grafanaICP.tar.gz)  
 
 Or Download them individually:
-++![ICP 2.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP2.1PerformanceIBMProvided.json)
-++![ICP 2.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP2.1NamespacesPerformanceIBMProvided.json)
+
++ ![ICP 2.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP2.1PerformanceIBMProvided.json)
++ ![ICP 2.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP2.1NamespacesPerformanceIBMProvided.json)
 
 Instructions for importing the dashboards [Grafana_Import](Grafana_Import.md)
 
@@ -20,7 +21,6 @@ Instructions for importing the dashboards [Grafana_Import](Grafana_Import.md)
 This dashboard provides a summary of current performance of the ICP environment. One should be able to immediately see what components are the top 5 consumers of CPU and Memory.  When importing this dashboard, you will need to change the "dummy" Kibana link to work in your installation. Instructions are following in this document
 
 ![ICPPerformance](images/ICPperf1.png)
-
 + Instructions for customizing the Link to Kibana [Kibana_Link](Edit_Kibana_Link.md)
 + Detailed Dashboard Information [ICP_Peformance](ICP_Performance_Dashboard_Detail.md)
 
