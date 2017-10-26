@@ -20,6 +20,7 @@
 
  + Note : You can find more dashboards at https://grafana.com/dashboards?dataSource=prometheus
  
+## How to set a default dashboard
 You can make a dashboard the default dashboard you see whn you login to Grafana by marking the star next to it in the dashboard drop down menu and then choosing it as the default in the organization profile.
 ![Dashboard Stars](images/dashboard-stars.png)
 
