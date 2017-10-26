@@ -5,9 +5,9 @@ As with any other Grafana import you will need to specify the Prometheus data so
 
 * Note: It is assumed that you have a working knowledge of Grafana and capable of editing a configuration in the dashboard.
 
-The dashboards can be downloaded via this link [Dashboards](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/grafanaICP.tar.gz)  
+The dashboards can be downloaded via this link which is a compressed file of all dashboards [Dashboards](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/grafanaICP.tar.gz)  
 
-Or Download them individually:
+Or Download them individually: (Right Click and Save)
 
 ![ICP 2.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP2.1PerformanceIBMProvided.json)
 
