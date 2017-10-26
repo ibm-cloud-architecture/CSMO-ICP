@@ -14,7 +14,7 @@ Or Download them individually:
 + ![ICP 2.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP2.1PerformanceIBMProvided.json)
 + ![ICP 2.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP2.1NamespacesPerformanceIBMProvided.json)
 
-Instructions for importing the dashboards [Grafana_Import](Grafana_Import.md)
+Instructions for importing the dashboards and customizing the link to the Kibana UI: [Grafana_Import](Grafana_Import.md)
 
 #### ICP 2.1 Peformance IBM Provided Dashboard
 ##### Current Version 2.5
@@ -23,9 +23,6 @@ This dashboard provides a summary of current performance of the ICP environment.
 Detailed Dashboard Information [ICP_Peformance](ICP_Performance_Dashboard_Detail.md)
 
 ![ICPPerformance](images/ICPperf1.png)
-
-
-
 
 ####  ICP 2.1 Namespace Performance IBM Provided Dashboard
 ##### Current Version 2.5
