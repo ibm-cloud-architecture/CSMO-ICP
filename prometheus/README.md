@@ -1,10 +1,8 @@
-**Prometheus**
-
 ***Base documentation for Prometheus Monitoring***
 
 [Basic documentation can be found in the ICP Knowledge center](https://www.ibm.com/support/knowledgecenter/SSBS6K_2.1.0/manage_metrics/monitoring_service.html)
 
-***Further generic information***
+***Further information***
 
 Prometheus is a systems and service monitoring system. It collects metrics from configured targets at given intervals, evaluates rule expressions, displays the results, and can trigger alerts if some condition is observed to be true. 
 https://prometheus.io/
@@ -54,6 +52,7 @@ A number of sample rule have been included in this repository.
 6. Reload the rules into Prometheus by browsing to `https://<master_ip>:8443/prometheus/reload` (or by restarting the Prometheus pod).
 
 ****Viewing alerts in Prometheus****
+
 Alerts that have actively *fired* can be seen in `https://<master_ip>:8443/alertmanager` or via *Menu*->*Platform*->*Alerting*
 To see the list of rules you must access the Prometheus dashboard through a proxy.
 
