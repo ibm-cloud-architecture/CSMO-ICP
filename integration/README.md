@@ -1,4 +1,3 @@
-*Integrations*
 
 Implementing outgoing alerts from Prometheus involve two components:
 1. The AlarmServer component in Prometheus
