@@ -1,6 +1,6 @@
 ## How to import the CSMO Grafana Dashboads
  1) Download and unpack the json files on your computer. 
- 2) In the file **ICP 2.1 Performance IBM Provided.json**, find and correct the link to Kibana (`https://<icp_IP_address>:8443/kibana`) or Instructions for customizing the Link to Kibana Kibana_Link
+ 2) In the file **ICP 2.1 Performance IBM Provided.json**, find and correct the link to Kibana (`https://<icp_IP_address>:8443/kibana`) or  Instructions for customizing the Link to Kibana [Kibana_Link](Edit_Kibana_Link.md)
  3) Launch the ICP Grafana (https://<your.deployment.ipaddress>:8443/grafana)
  4) Click on **Home** on the top left, a drop down menu will appear.
  5) On the right of this menu clink on **Import Dashboard** 
