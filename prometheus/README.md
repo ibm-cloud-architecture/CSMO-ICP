@@ -23,13 +23,15 @@ Filter by *monitoring* and *alert* to see the components.
 
 You can also see the components using the command line interface:
 
-```$kubectl get configmap --namespace=kube-system | grep "alert\|monitor"
+```
+$kubectl get configmap --namespace=kube-system | grep "alert\|monitor"
 alert-rules                           1         6d
 alertmanager-router-nginx-config      1         6d
 monitoring-grafana-config             1         6d
 monitoring-grafana-dashboard-config   3         6d
 monitoring-prometheus                 1         6d
 monitoring-prometheus-alertmanager    1         6d
-monitoring-router-entry-config        1         6d```
+monitoring-router-entry-config        1         6d
+```
 
 
