@@ -1,9 +1,11 @@
-**Integrations**
+*Integrations*
+
 Implementing outgoing alerts from Prometheus involve two components:
 1. The AlarmServer component in Prometheus
 2. The recieving component
 
 ***Configuring the AlarmServer***
+
 The most important definitions of the AlarmServer are the recievers of alerts and the routing of alerts.
 [Prometheus AlertManager base documentation](https://prometheus.io/docs/alerting/configuration/)
 
@@ -50,6 +52,7 @@ old file:
  5. Once the configuration has been reloaded and alerts fired, you will see webhooks sent to your target.
  
  ***Configuring NOI as a webhook reciever***
+ 
  By using the [Netcool MessageBus Probe](https://www.ibm.com/support/knowledgecenter/en/SSSHTQ/omnibus/probes/message_bus/wip/concept/messbuspr_intro.html), you can receive Prometheus AlertServer events.
  1. [Download](http://www-01.ibm.com/support/docview.wss?uid=swg21970413) and [install](https://www.ibm.com/support/knowledgecenter/en/SSSHTQ/omnibus/probes/common/topicref/pro_install_intro_messbuspr.html) the MessageBus Probe.
  2. The files in the [messagebus directory](https://github.com/ibm-cloud-architecture/CSMO-ICP/tree/master/integration/messagebus) are the necessary configuration files for the probe. Add or merge them to your existing environment:
