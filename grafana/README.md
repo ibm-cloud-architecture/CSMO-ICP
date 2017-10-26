@@ -11,7 +11,7 @@ Or Download them individually:
 
 ![ICP 2.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/"ICP 2.1 Performance IBM Provided.json")
 
-![ICP 2.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP\ 2.1\ Namespaces\ Performance\ IBM\ Provided.json)
+![ICP 2.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1%20Namespaces%20Performance%20IBM%20Provided.json)
 
 Instructions for importing the dashboards [Grafana_Import](Grafana_Import.md)
 
