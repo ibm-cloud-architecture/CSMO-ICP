@@ -35,11 +35,33 @@ monitoring-router-entry-config        1         6d
 
 
 ***Creating alerts in Prometheus***
+
 In order to generate alerts and notify people that an incident has occured, two items must be configured in Prometheus
 1. The notification targets (i.e. who do we want to inform) and
 2. The rules (i.e. what do we want to inform them of)
 
 Definition of notification targets is explained in the [Integration](https://github.com/ibm-cloud-architecture/CSMO-ICP/tree/master/integration) section.
 Basic documentation on the creation of Prometheus rules can be found in the [Prometheus documentation](https://prometheus.io/docs/alerting/rules/).
+
+****Loading new rules into Prometheus****
+
+A number of sample rule have been included in this repository. 
+1. [Download the files](https://github.com/ibm-cloud-architecture/CSMO-ICP/tree/master/prometheus/rules) into a subdirectory (make sure they are the only files there). 
+2. Verify that the old ConfigMap exists with the command `kubectl describe cm --namespace=kube-system alert-rules`
+3. Delete the old ConfigMap with the command `kubecetl delete cm --namespace=kube-system alert-rules`
+4. Create a new ConfigMap with the command `kubectl create cm --namespace=kube-system alert-rules --from-file=./directory_with_files`
+5. View the ConfigMap and make sure that the rules have been loaded with the command `kubectl describe cm --namespace=kube-system alert-rules`
+6. Reload the rules into Prometheus by browsing to `https://<master_ip>:8443/prometheus/reload` (or by restarting the Prometheus pod).
+
+****Viewing alerts in Prometheus****
+Alerts that have actively *fired* can be seen in `https://<master_ip>:8443/alertmanager` or via *Menu*->*Platform*->*Alerting*
+To see the list of rules you must access the Prometheus dashboard through a proxy.
+
+1. Run the command `kubectl get pods --namespace=kube-system -l app=monitoring-prometheus,component=prometheus -o jsonpath="{.items[0].metadata.name}"` to get the name of the Prometheus server pod
+2. Run the command `kubectl port-forward --namespace=kube-system <pod_name> 9090` to activate the proxy
+3. Open `http://localhost:9090/alerts` to access Prometheus from your browser and see the available alerts (both fired and un-fired)
+
+
+
 
 
