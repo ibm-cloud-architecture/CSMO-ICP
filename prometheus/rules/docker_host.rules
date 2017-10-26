@@ -17,7 +17,7 @@ ALERT high_memory_load
   }
 
 ALERT high_storage_load
-  IF (node_filesystem_size{fstype="aufs"} - node_filesystem_free{fstype="aufs"}) / node_filesystem_size{fstype="aufs"}  * 100 > 85
+  IF (node_filesystem_size{fstype="aufs"} - node_filesystem_free{fstype="aufs"}) / node_filesystem_size{fstype="aufs"}  * 100 > 15
   FOR 30s
   LABELS { severity = "warning" }
   ANNOTATIONS {
