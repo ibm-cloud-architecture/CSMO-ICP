@@ -31,6 +31,7 @@ new file:
  
 ```
 This will ensure that all events will be sent to `target_url`.
+
 3. By default, Prometheus will group similar events together so that you will get less messages and each message will contain multiple events.
 If you want to avoid this, add a *group_by* configuration to the routing definition.
 
