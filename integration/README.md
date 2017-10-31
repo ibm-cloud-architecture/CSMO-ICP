@@ -5,7 +5,7 @@ Implementing outgoing alerts from Prometheus involve two components:
 
 ***Configuring the AlertManager***
 
-The most important definitions of the AlarmServer are the recievers of alerts and the routing of alerts.
+The most important definitions of the AlarmServer are the receivers of alerts and the routing of alerts.
 [Prometheus AlertManager base documentation](https://prometheus.io/docs/alerting/configuration/)
 
 In this example, we will be configuring the AlertServer to forward a webhook when an alert fires.
