@@ -1,7 +1,7 @@
 
 Implementing outgoing alerts from Prometheus involve two components:
 1. The AlarmServer component in Prometheus
-2. The recieving component
+2. The receiving component
 
 ***Configuring the AlertManager***
 
