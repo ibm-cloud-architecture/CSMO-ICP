@@ -1,0 +1,46 @@
+global:
+  scrape_interval: 15s
+alerting:
+  alertmanagers:
+  - scheme: https
+    static_configs:
+    - targets: ['localhost:9093']
+
+rule_files:
+  - /etc/prometheus/rules/*.rules
+
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'federate'
+    scrape_interval: 15s
+    #honor_labels: true
+    honor_labels: false
+    metrics_path: '/federate'
+    params:
+      'match[]':
+        - 'up'
+        - 'node_memory_MemTotal'
+        - 'kubelet_running_pod_count'
+        - 'kube_node_info'
+        - 'kube_pod_container_status_restarts'
+        - 'kubelet_docker_operations_errors'
+        - 'container_cpu_system_seconds_total'
+        - 'container_cpu_usage_seconds_total'
+        - 'container_cpu_user_seconds_total'
+        - 'container_memory_usage_bytes'
+        - 'kube_deployment_status_observed_generation'
+        - 'kube_deployment_status_replicas_available'
+        - 'kube_deployment_status_replicas_unavailable'
+    static_configs:
+        - targets: ['<target1IP>:<port>']
+          labels:
+             global_name: 'uniquename_1'
+             icp_console: 'https://<target1IP>:8443'
+        - targets: ['<target2IP>:<port>']
+          labels:
+             global_name: 'uniquename_2'
+             icp_console: 'https://<target1IP>:8443'
+
