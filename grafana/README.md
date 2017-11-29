@@ -29,6 +29,6 @@ Detailed Dashboard Information [ICP_Peformance](ICP_Performance_Dashboard_Detail
 ####  ICP 2.1 Namespace Performance IBM Provided Dashboard
 ##### Current Version 2.5
 This dashboard provides a focus on the namespace memory and CPU performance in your deployment. Just download and import the json file and you are good to go
-You can switch between namespaces by changed to the desired namespace at the top of the dashboard. You can only view one namespace at a time.
+You can switch between namespaces by changing to the desired namespace at the top of the dashboard. You can only view one namespace at a time.
 
 ![ICPnamespacePerformance](images/ICPnamspperf1.png)
