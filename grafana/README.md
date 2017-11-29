@@ -14,7 +14,7 @@ Or Download them individually:
 + ![ICP 2.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1%20Namespaces%20Performance%20IBM%20Provided%202.5-1510766737498.json)
 + ![ICP 2.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1%20Namespaces%20Performance%20IBM%20Provided%202.5-1510766737498.json)
 
-Instructions for importing the dashboards and customizing the link to the Kibana UI: [Grafana_Import](Grafana_Import.md)
+Instructions for importing the dashboards and customizing the link to the Kibana UI: [Grafana_Import](blob/master/grafanaGrafana_Import.md)
 Or 
 You Can also Click on the above dashbaords and copy the json directly into your Grafana by pasting into the Import Screen. 
 
