@@ -9,12 +9,13 @@ The dashboards can be downloaded via the following links: (Right Click and Save)
 
 This link is a compressed file of all CSMO dashboards [Dashboards](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/grafanaICP.tar.gz)  
 
-Or Download them individually: (Right Click and Save Target As)
+Or Download them individually: (Right Click and Save Link As)
 
 + ![ICP 2.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1%20Namespaces%20Performance%20IBM%20Provided%202.5-1510766737498.json)
 + ![ICP 2.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1%20Namespaces%20Performance%20IBM%20Provided%202.5-1510766737498.json)
 
 Instructions for importing the dashboards and customizing the link to the Kibana UI: [Grafana_Import](Grafana_Import.md)
+
 
 #### ICP 2.1 Peformance IBM Provided Dashboard
 ##### Current Version 2.5
