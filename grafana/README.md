@@ -20,7 +20,7 @@ You Can also Click on the above dashbaords and copy the json directly into your 
 
 #### ICP 2.1 Peformance IBM Provided Dashboard
 ##### Current Version 2.5
-This dashboard provides a summary of current performance of the ICP environment. One should be able to immediately see what components are the top 5 consumers of CPU and Memory.  When importing this dashboard, you will need to change the "dummy" Kibana link to work in your installation. Instructions are here: [Kibana ](../blob/master/LICENSE)
+This dashboard provides a summary of current performance of the ICP environment. One should be able to immediately see what components are the top 5 consumers of CPU and Memory.  When importing this dashboard, you will need to change the "dummy" Kibana link to work in your installation. Instructions are here: [Kibana ](/Edit_Kibana_Link.md)
 
 Detailed Dashboard Information [ICP_Peformance](ICP_Performance_Dashboard_Detail.md)
 
