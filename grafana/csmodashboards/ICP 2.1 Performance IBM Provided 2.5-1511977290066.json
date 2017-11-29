@@ -50,7 +50,7 @@
   "annotations": {
     "list": []
   },
-  "description": "Monitors Kubernetes cluster using Prometheus. Shows overall cluster CPU / Memory / Filesystem usage as well as individual pod, containers, systemd services statistics. Uses cAdvisor metrics only.",
+  "description": "Monitors ICP cluster using Prometheus. Shows overall Metrics Summary (High Level KPIs , Container, Pod CPU and Memory.",
   "editable": true,
   "gnetId": 315,
   "graphTooltip": 0,
@@ -63,7 +63,7 @@
       "targetBlank": true,
       "title": "Kibana",
       "type": "link",
-      "url": "https:/172.16.249.165:8443/kibana"
+      "url": "https://<icp_IP_address>:8443/kibana"
     },
     {
       "asDropdown": true,
