@@ -44,12 +44,16 @@ Definition of notification targets is explained in the [Integration](https://git
 Basic documentation on the creation of Prometheus rules can be found in the [Prometheus documentation](https://prometheus.io/docs/alerting/rules/).
 
 ****Loading new rules into Prometheus****
-
+This procedure depends on the use of the tool [jq](https://stedolan.github.io/jq/)
 A number of sample rule have been included in this repository. 
 1. [Download the files](https://github.com/ibm-cloud-architecture/CSMO-ICP/tree/master/prometheus/rules) into a subdirectory (make sure they are the only files there). 
-2. Verify that the old ConfigMap exists with the command `kubectl describe cm --namespace=kube-system alert-rules`
-3. Delete the old ConfigMap with the command `kubecetl delete cm --namespace=kube-system alert-rules`
-4. Create a new ConfigMap with the command `kubectl create cm --namespace=kube-system alert-rules --from-file=./directory_with_files`
+2. Choose the specific rulefile you want to load by running the command `File=<path_to_file>`. You can also specify an entire directory, but note that all the files in that directory will be loaded.
+3. Run the command `kubectl get configmap alert-rules -o json --namespace=kube-system | jq --argjson newRule "$(kubectl create configmap test --from-file=$File --dry-run -o json | jq .data)" '.data |= . + $newRule' | kubectl replace -f -`
+4. This command does 4 things:
+* `kubectl get configmap alert-rules -o json --namespace=kube-system` extracts the existing ConfigMap which contains the rules
+* `"$(kubectl create configmap test --from-file=$File --dry-run -o json | jq .data)"` creates a dummy ConfigMap out of the rulesfile and extracts the data section without loading it into Kubernetes
+* `'.data |= . + $newRule'` appends the new data to the existing data
+* `| kubectl replace -f -` replaces the old configmap with the updated one
 5. View the ConfigMap and make sure that the rules have been loaded with the command `kubectl describe cm --namespace=kube-system alert-rules`
 6. Reload the rules into Prometheus by browsing to `https://<master_ip>:8443/prometheus/reload` (or by restarting the Prometheus pod).
 
