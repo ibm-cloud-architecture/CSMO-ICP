@@ -52,7 +52,7 @@ kubectl get --namespace kube-system -o jsonpath="{.spec.ports[0].nodePort}" serv
 
 Next there are three certificate we need to extract from the ICP endpoint, decode from Base64 and create the certificate files for the Prometheus server.
 
-*** Get the CA certificate
+*** Get the CA certificate ***
 ```
 kubectl get secrets/monitoring-ca-cert -n kube-system -o yaml
 apiVersion: v1
