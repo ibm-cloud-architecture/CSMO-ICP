@@ -1,6 +1,6 @@
 **Prometheus Federation**
 
-When we first started blogging about monitoring ICP, we demoed federation of multiple ICP deployments to a central Prometheus server using the HTTP protocol. With the recent 2.1.0.1 release, federation should now be done securely using the HTTP/S protocol and the monitoring certificates within ICP.
+When we first started blogging about monitoring ICP, we demoed federation of multiple ICP deployments to a central Prometheus server using the HTTP protocol. With the recent 2.1.0.1 release, federation should now be done securely using the HTTP/S protocol and the monitoring certificates within ICP. The instructions below will assist one with setting up Federation of mutiple ICP envivornments using the certificates. 
 
 What is needed:
 
@@ -120,7 +120,8 @@ csmoicp1-ca.pem
 csmoicp1-rsa.pem  
 csmoicp1-tls.pem
 ```
-Almost there, Next the Prometheus servers yaml file needs to be updated to scrape the endpoint. As shown here, Note: create a job for each endpoint. The IP address and the NodePort number returned from the kubectl command performed earlier:
+Almost there, Next the Prometheus servers yaml file needs to be updated to scrape the endpoint. As shown here, Note: create a job for each endpoint. The IP address of the master node, the NodePort number returned from the kubectl command performed earlier and the full path to the certificate files are needed, 
+
 
 ```
 - job_name: 'csmoicp1'
@@ -160,10 +161,10 @@ Almost there, Next the Prometheus servers yaml file needs to be updated to scrap
       - 'node_network_transmit_bytes'
 
   static_configs:
-      - targets: ['IP_ADDRESS:30489']  
+      - targets: ['IP_ADDRESS:30489']
 
         labels:
-           global_name: 'CSMO-1 ICP'
+           global_name: 'CSMO-1 ICP'   
            icp_console: 'https://IPADDRESS:8443'
   tls_config:
     ca_file: /etc/prometheus/certs/csmoicp1-ca.pem
