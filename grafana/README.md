@@ -7,12 +7,12 @@ As with any other Grafana import you will need to specify the Prometheus data so
 
 The dashboards can be downloaded via the following links: (Right Click and Save Link As)
 
-This link is a compressed file of all CSMO dashboards [csmodashboards.zip](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/grafanaICP.zip)  
+This link is a compressed file of all CSMO dashboards [csmodashboards.zip](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/csmodashboards.zip)  
 
 Or Download them individually: 
 
-+ ![ICP 2.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1%20Namespaces%20Performance%20IBM%20Provided%202.5.json)
-+ ![ICP 2.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1%20Namespaces%20Performance%20IBM%20Provided%202.5-1.json)
++ ![ICP 2.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%2.1.0.1%Performance%IBM%Provided%2.5-1522946498049.json)
++ ![ICP 2.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%2.1.0.1%Namespaces%Performance%2.5%IBM%Provided-1522946328109.json)
 
 Instructions for importing the dashboards and customizing the link to the Kibana UI: [Grafana_Import](blob/master/grafanaGrafana_Import.md)
 Or 
