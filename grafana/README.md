@@ -32,9 +32,9 @@ Unzip and import the json file into Grafana.
  OR 
 Click on each link below and copy the json into the Grafana import json window. 
  
-[ICP 2.1.0.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1.0.1%20Performance%20IBM%20Provided%202.5-1522946498049.json)
+[ICP 2.1.0.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1.0.2%20Performance%20IBM%20Provided%202.5-1522946498049.json)
 
-[ICP 2.1.0.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1.0.1%20Namespaces%20Performance%202.5%20IBM%20Provided-1522946328109.json)
+[ICP 2.1.0.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1.0.2%20Namespaces%20Performance%202.5%20IBM%20Provided-1522946328109.json)
 
 #### ICP 2.1.0.1 Peformance IBM Provided Dashboard
 ##### Current Version 2.5
