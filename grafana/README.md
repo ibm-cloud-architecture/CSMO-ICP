@@ -5,11 +5,10 @@
 ```
 Bug fix for Namespace Dashboard
 
-In the last relaease of ICP the Namespace variable was somehow corrupted. The Namespace selector will be blank, 
-the default is not being populated. 
-We have corrected this and a working NameSpace dashboard is available for import from this repo.
-Or you can fix it locally in ICP by changing the namesspace in the menu and re-freshing your browser. 
-The dashboards installed with ICP are read-only - you need to save them in order to perform your own customiations.
+In the last relaease of ICP the Namespace variable was somehow corrupted. The Namespace selector will be 
+blank, the default is not populated. We have corrected this and a working NameSpace dashboard is available 
+for import from this repo. Or you can fix it locally in ICP by changing the namesspace in the menu and re-freshing your browser. 
+The dashboards installed with ICP are read-only. You will need to save them in order to perform your own customiations.
 
 Open an issue if you have any questions. 
 
