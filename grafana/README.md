@@ -1,5 +1,11 @@
 ## IBM Cloud Service Management and Operations
 ### Performance Management in IBM Cloud Private
+```
+#### MPORTANT: #### In the last relaease of ICP the Namespace variable was somehoe corrupted. We have corrected this and the a working NameSpace dashboard is available for import here. Or you can fix it locally in ICP by chnaging the namesspace in the menu and re-freshing your browser. Open an issue if you have any questions. 
+
+Thanks, Your friendly neighborhood CSMO Team. 
+````
+
 We have created a ICP Specific Dashboards for your use. These dashboards are focused on the performance of the ICP deployment and the name spaces
 As with any other Grafana import you will need to specify the Prometheus data source. During installation the default prometheus data provider was used in creating these dashboards.
 
@@ -9,11 +15,11 @@ The dashboards can be downloaded via the following links:
 
 This link is a compressed file of all CSMO dashboards. Click on this link and Download from the git repo. 
 
-###### DO NOT USE right-click Save As to save these dashboards. 
+##### DO NOT USE right-click Save As to save these dashboards. 
 
 [csmodashboards.zip](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/csmodashboards.zip) 
 
-Unxip and import to Grafana. 
+Unzip and import to Grafana. 
 
  OR 
  Click on each link below and copy the json into the Grafana import json window. 
