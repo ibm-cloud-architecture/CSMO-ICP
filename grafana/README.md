@@ -32,11 +32,11 @@ Unzip and import the json file into Grafana.
  OR 
 Click on each link below and copy the json into the Grafana import json window. 
  
-[ICP 2.1.0.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1.0.2%20Performance%20IBM%20Provided%202.5-1522946498049.json)
+[ICP 2.1.0.2 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1.0.2%20Performance%20IBM%20Provided%202.5-1522946498049.json)
 
-[ICP 2.1.0.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1.0.2%20Namespaces%20Performance%202.5%20IBM%20Provided-1522946328109.json)
+[ICP 2.1.0.2 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1.0.2%20Namespaces%20Performance%202.5%20IBM%20Provided-1522946328109.json)
 
-#### ICP 2.1.0.1 Peformance IBM Provided Dashboard
+#### ICP 2.1.0.2 Peformance IBM Provided Dashboard
 ##### Current Version 2.5
 This dashboard provides a summary of current performance of the ICP environment. One should be able to immediately see what components are the top 5 consumers of CPU and Memory.  When importing this dashboard, you will need to change the "dummy" Kibana link to work in your installation. [Instructions are here](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/Edit_Kibana_Link.md)
 
@@ -44,7 +44,7 @@ Detailed Dashboard Information [ICP_Peformance](ICP_Performance_Dashboard_Detail
 
 ![ICPPerformance](images/ICPperf1.png)
 
-####  ICP 2.1.0.1 Namespace Performance IBM Provided Dashboard
+####  ICP 2.1.0.2 Namespace Performance IBM Provided Dashboard
 ##### Current Version 2.5
 This dashboard provides a focus on the namespace memory and CPU performance in your deployment. Just download and import the json file and you are good to go
 You can switch between namespaces by changing to the desired namespace at the top of the dashboard. You can only view one namespace at a time.
