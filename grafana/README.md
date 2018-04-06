@@ -22,15 +22,15 @@ As with any other Grafana import you will need to specify the Prometheus data so
 The dashboards can be downloaded via the following links: 
 
 
-                                              ###### DO NOT USE right-click Save As to save these dashboards. 
+                                               DO NOT USE right-click Save As to save these dashboards. 
          
-This link is a compressed file of all CSMO dashboards. Click on this link and Download from the git repo. 
+This link is a compressed file of all CSMO dashboards. Click on this link and Download from the git repo by clicking the download button. 
 
 [csmodashboards.zip](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/csmodashboards.zip) 
 
-Unzip and import to Grafana. 
-
+Unzip and import the json file into Grafana. 
  OR 
+ 
  Click on each link below and copy the json into the Grafana import json window. 
  
 [ICP 2.1.0.1 Performance Dashboard](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1.0.1%20Performance%20IBM%20Provided%202.5-1522946498049.json)
