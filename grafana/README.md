@@ -5,9 +5,10 @@ As with any other Grafana import you will need to specify the Prometheus data so
 
 * Note: It is assumed that you have a working knowledge of Grafana and capable of editing a configuration in the dashboard.
 
-The dashboards can be downloaded via the following links: (Right Click and Save Link As)
+The dashboards can be downloaded via the following links: 
 
-This link is a compressed file of all CSMO dashboards [csmodashboards.zip](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/csmodashboards.zip)  
+This link is a compressed file of all CSMO dashboards. Click on this link and Download from the git repo. 
+[csmodashboards.zip](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/csmodashboards.zip)  
 
 Or Download them individually: 
 
