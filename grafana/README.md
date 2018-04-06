@@ -5,20 +5,22 @@
 ```
 Bug fix for Namespace Dashboard
 
-In the last relaease of ICP the Namespace variable was somehoe corrupted. 
-We have corrected this and the a working NameSpace dashboard is available for import here. 
-Or you can fix it locally in ICP by chnaging the namesspace in the menu and re-freshing your browser. 
+In the last relaease of ICP the Namespace variable was somehow corrupted. The Namespace selector will be blank, 
+the default is not being populated. 
+We have corrected this and a working NameSpace dashboard is available for import from this repo.
+Or you can fix it locally in ICP by changing the namesspace in the menu and re-freshing your browser. 
+The dashboards installed with ICP are read-only - you need to save them in order to perform your own customiations.
 
 Open an issue if you have any questions. 
 
-The Dashboards are now named ICP 2.1.0.2* as this is the cerrent ICP version. The dashbaords are not dependent 
+The Dashboards are now named ICP 2.1.0.2* to reflect the current ICP version. They are not dependent 
 on the ICP version. 
 
 Thanks, Your friendly neighborhood CSMO Team. 
 ````
 
 We have created a ICP Specific Dashboards for your use. These dashboards are focused on the performance of the ICP deployment and the name spaces
-As with any other Grafana import you will need to specify the Prometheus data source. During installation the default prometheus data provider was used in creating these dashboards.
+As with any other Grafana import you will need to specify the Prometheus data source. The default prometheus Grafana data source  was used to create these dashboards.
 
 * Note: It is assumed that you have a working knowledge of Grafana and capable of editing a configuration in the dashboard.
 
