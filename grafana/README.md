@@ -11,7 +11,7 @@ Or you can fix it locally in ICP by chnaging the namesspace in the menu and re-f
 
 Open an issue if you have any questions. 
 
-The Dashboards are names ICP 2.1.0.2 as this is the cerrent ICP version. The dashbaords are not dependent 
+The Dashboards are now named ICP 2.1.0.2* as this is the cerrent ICP version. The dashbaords are not dependent 
 on the ICP version. 
 
 Thanks, Your friendly neighborhood CSMO Team. 
