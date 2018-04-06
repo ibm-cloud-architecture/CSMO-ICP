@@ -1,7 +1,7 @@
 ## IBM Cloud Service Management and Operations
 ### Performance Management in IBM Cloud Private
 ```
-#### MPORTANT:
+__MPORTANT:__
 
 In the last relaease of ICP the Namespace variable was somehoe corrupted. 
 We have corrected this and the a working NameSpace dashboard is available for import here. 
