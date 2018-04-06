@@ -1,8 +1,10 @@
 ## IBM Cloud Service Management and Operations
 ### Performance Management in IBM Cloud Private
 
-### Bug fix for Namespace Dashboard
+ 
 ```
+Bug fix for Namespace Dashboard
+
 In the last relaease of ICP the Namespace variable was somehoe corrupted. 
 We have corrected this and the a working NameSpace dashboard is available for import here. 
 Or you can fix it locally in ICP by chnaging the namesspace in the menu and re-freshing your browser. 
