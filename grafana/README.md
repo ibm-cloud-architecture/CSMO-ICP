@@ -9,7 +9,7 @@ In the last relaease of ICP the Namespace variable was somehow corrupted. The Na
 blank, the default is not populated. We have corrected this and a working NameSpace dashboard is available 
 for import from this repo. Or you can fix it locally in ICP by changing the namesspace in the menu and 
 refreshing your browser. The dashboards installed with ICP are read-only. You will need to save them 
-to perform your own customiations.
+to perform your own customizations.
 
 Open an issue if you have any questions. 
 
