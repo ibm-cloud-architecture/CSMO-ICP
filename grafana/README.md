@@ -20,10 +20,6 @@ Unxip and import to Grafana.
 
 [ICP 2.1 Namespace Performance](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/csmodashboards/ICP%202.1.0.1%20Namespaces%20Performance%202.5%20IBM%20Provided-1522946328109.json)
 
-Instructions for importing the dashboards and customizing the link to the Kibana UI: [Grafana_Import](blob/master/grafanaGrafana_Import.md)
-Or 
-You Can also Click on the above dashbaords and copy the json directly into your Grafana by pasting into the Import Screen. 
-
 #### ICP 2.1 Peformance IBM Provided Dashboard
 ##### Current Version 2.5
 This dashboard provides a summary of current performance of the ICP environment. One should be able to immediately see what components are the top 5 consumers of CPU and Memory.  When importing this dashboard, you will need to change the "dummy" Kibana link to work in your installation. [Instructions are here](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/grafana/Edit_Kibana_Link.md)
