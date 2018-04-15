@@ -44,8 +44,12 @@ Definition of notification targets is explained in the [Integration](https://git
 Basic documentation on the creation of Prometheus rules can be found in the [Prometheus documentation](https://prometheus.io/docs/alerting/rules/).
 
 ****Loading new rules into Prometheus****
+
+*WARNING* : The following rules files are suitable for ICP 2.1 and 2.1.0.1 which have Prometheus 1.x. If you have a higher level of ICP, which uses Prometheus 2.x, use the [instructions here](https://github.com/ibm-cloud-architecture/CSMO-ICP/tree/master/prometheus/alerts_prometheus2.x)!
+
 This procedure depends on the use of the tool [jq](https://stedolan.github.io/jq/)
 A number of sample rule have been included in this repository. 
+
 1. [Download the files](https://github.com/ibm-cloud-architecture/CSMO-ICP/tree/master/prometheus/rules) into a subdirectory (make sure they are the only files there). 
 2. Choose the specific rulefile you want to load by running the command `File=<path_to_file>`. You can also specify an entire directory, but note that all the files in that directory will be loaded.
 3. Run the command `kubectl get configmap alert-rules -o json --namespace=kube-system | jq --argjson newRule "$(kubectl create configmap test --from-file=$File --dry-run -o json | jq .data)" '.data |= . + $newRule' | kubectl replace -f -`
