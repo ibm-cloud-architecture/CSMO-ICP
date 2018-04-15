@@ -74,7 +74,12 @@ csmoicp1-ca.pem
 csmoicp1-rsa.pem  
 csmoicp1-key.pem
 ```
-Almost there, Next the Prometheus servers yaml file needs to be updated to scrape the endpoint. As shown here, Note: create a job for each endpoint. The IP address of the master node, the NodePort number returned from the kubectl command performed earlier and the full path to the certificate files are needed, 
+
+Next, the Prometheus configuration YAML file needs to be updated to scrape the endpoint as shown below.
+
+The IP address of the master node, the NodePort number returned from the kubectl command performed earlier and the full path to the certificate files are needed. 
+
+You will need to create a job for each endpoint (i.e. for each ICP you are monitoring).
 
 
 ```
@@ -130,10 +135,10 @@ Almost there, Next the Prometheus servers yaml file needs to be updated to scrap
 .
 .
 .
-.
 ```
-Restart the Prometheus server, (I always tail the syslog to ensure proper startup).
-You should see data from the endpoint note it may take up to a minute or two.
+Restart the Prometheus server or run the command `curl -X POST http://localhost:9090/-/reload` to get Promethes to re-read the configuration. I always tail the syslog to ensure proper startup.
+You should see data from the endpoint (It may take up to a minute or two).
+
 This is a screenshot of our dashboard used to verify the health of Prometheus.
 ![PromHeatlh](/images/PromHealth.png)
 
