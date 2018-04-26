@@ -61,9 +61,9 @@ You may need to install the utilities `jq` and `base64` for this.
 
   Next  get the tls Certificate and the Client Key
 ```
-  kubectl get secrets/monitoring-client-certs -n kube-system -o json | jq -r '.data."tls.crt" | base64 -d > /etc/prometheus/certs/csmoicp-tls.pem
+  kubectl get secrets/monitoring-client-certs -n kube-system -o json | jq -r '.data."tls.crt"' | base64 -d > /etc/prometheus/certs/csmoicp-tls.pem
   
-  kubectl get secrets/monitoring-client-certs -n kube-system -o json | jq -r '.data."tls.key" | base64 -d > /etc/prometheus/certs/csmoicp-key.pem
+  kubectl get secrets/monitoring-client-certs -n kube-system -o json | jq -r '.data."tls.key"' | base64 -d > /etc/prometheus/certs/csmoicp-key.pem
 
 ```
 
