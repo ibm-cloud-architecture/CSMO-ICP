@@ -10,4 +10,4 @@ As defined in the [Cloud Service Management and Operations reference architectur
 
 As of late October, we are concentrating only on the Monitoring & Logging components which are builtin to the Kubernetes component of IBM Cloud Private. We will also discuss integration points with external Event Management solutions such as Netcool Operations Insight.
 
-Soon, this document will be updated to include internal monitoring components such as Cloud Foundry monitoring capabilities and external components such as [APM](https://developer.ibm.com/apm/docs/apm-and-ibm-cloud-monitoring/).
+Soon, this document will be updated to include internal monitoring components such as Cloud Foundry monitoring capabilities and external components such as [APM](./APM).
