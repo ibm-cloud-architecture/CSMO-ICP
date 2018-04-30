@@ -2,7 +2,7 @@
 In addition to monitoring an ICP deployment or any application, most enterprises have at least one or more APM tools deployment in their environment.
 CSMO EL used the IBM APM tool for monitoring ICP, application installed in ICP and other components such as VMware. Currently Version 8.1.4 is installed. We also leverage the [APM Grafana plugin](https://github.com/rafal-szypulka/grafana-ibm-apm) to provide APM and ICP observability in Grafana.  
 
-We Monitor the ICP Host OS with the [os-agent.](./images/ICPHOSTOSMon.png)
+We Monitor the ICP Host OS with the ![os-agent.](./images/ICPHOSTOSMon.png)
 
 
 
@@ -14,4 +14,4 @@ We monitor URLs and generate transactions, using Selenium Scripts and URL/API mo
 
 All of the monitoring tools report any alerts to our Netcool Operations Insight deployment for processing and notification.  
 
-Grafana has been used to create dashboards using both the Federation Prometheus Server and Data stored in APM. The Screen Shot below is a dashboard showing scrape performance on the Federation Server along with CPU and Memory consumption delivered via the APM OS Agent. [Prometheus Health Dashboard](./images/CSMO Prometheus Federation Server Health)
+Grafana has been used to create dashboards using both the Federation Prometheus Server and Data stored in APM. The Screen Shot below is a dashboard showing scrape performance on the Federation Server along with CPU and Memory consumption delivered via the APM OS Agent. ![Prometheus Health Dashboard](./images/CSMOPrometheusServerHealthwithAPM.png)
