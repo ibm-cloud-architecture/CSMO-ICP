@@ -3,7 +3,7 @@ In addition to monitoring an ICP deployment or any application, most enterprises
 CSMO EL used the IBM APM tool for monitoring ICP, application installed in ICP and other components such as VMware. Currently Version 8.1.4 is installed. We also leverage the [APM Grafana plugin](https://github.com/rafal-szypulka/grafana-ibm-apm) to provide APM and ICP observability in Grafana.  
 
 We Monitor the ICP Host Linux OS with the os-agent. This is a view of ICP OS monitoring
-![os-agent](./images/ICPHOSTOSMon.png)
+![os-agent](./images/ICPLinuxAPM.png)
 
 
 
