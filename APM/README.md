@@ -7,15 +7,13 @@ More information anout the IBM APM solution for ICP is here [IBMAPM](https://dev
 We Monitor the ICP Host Linux OS with the os-agent. This is a view of ICP OS monitoring
 ![os-agent](./images/ICPLinuxAPM.png)
 
-
-
 We monitor with the VMware infrastructure with the APM v8 agents
 
-vmaware PIC
+![apm_vmware](./images/APMVMware.png)
 
 We monitor URLs and generate transactions, using Selenium Scripts and URL/API monitors. The scripts are run via both the Synthetic Transaction agent in APM and via IBM Clouds Availability Monitoring in IBM Cloud Public.
 
-Synthetics PIC
+![apm_syn](./images/csmo_syn.png)
 
 All of the monitoring tools report any alerts to our Netcool Operations Insight deployment for processing and notification.  
 
