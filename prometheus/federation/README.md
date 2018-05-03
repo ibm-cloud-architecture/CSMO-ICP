@@ -11,7 +11,7 @@ There are key considerations you must solve when deploying a federated Prometheu
 + Send any alerts from each monitored endpoint not from the federation server.
 + It is expected that Grafana dashboards be leveraged  for a deeper dive into the metrics at each monitored endpoint.
 
-![fedarch](./images/GenericFed.png)
+![fedarch](./images/GenericFederation.png)
 
 What is needed:
 
