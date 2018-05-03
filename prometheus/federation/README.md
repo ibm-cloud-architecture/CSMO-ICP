@@ -2,6 +2,17 @@
 
 When we first started blogging about monitoring ICP, we demoed federation of multiple ICP deployments to a central Prometheus server using the HTTP protocol. With the recent 2.1.0.1 release, federation should now be done securely using the HTTP/S protocol and the monitoring certificates within ICP. The instructions below will assist one with setting up Federation of mutiple ICP envivornments using the certificates. 
 
+There are key considerations you must solve when deploying a federated Prometheus solution for ICP:
+
++ What metric data do I federate? Do not federate metrics you will not use.
++ What style of federation suites my needs? Do I have multiple locations with multiple ICP deployment (either geographically or co-located)?
++ How do I visualize the federated data?
++ How do I know my “central” Prometheus (as we called it) is handling the federation job? Monitor the federation server.
++ Send any alerts from each monitored endpoint not from the federation server.
++ It is expected that Grafana dashboards be leveraged  for a deeper dive into the metrics at each monitored endpoint.
+
+![fedarch](./images/GenericFed.png)
+
 What is needed:
 
 + A central Prometheus server either running on Cloud or StandAlone.   
