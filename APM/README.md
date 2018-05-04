@@ -1,5 +1,5 @@
 # CSMO Expert Labs APM
-In addition to monitoring an ICP deployment or any application, most enterprises have at least one or more APM tools deployment in their environment.
+In addition to monitoring an ICP deployment or any application, most enterprises have at least one or more APM tools deployed in their environment.
 CSMO EL used the IBM APM tool for monitoring ICP, application installed in ICP and other components such as VMware. Currently Version 8.1.4 is installed. We also leverage the [APM Grafana plugin](https://github.com/rafal-szypulka/grafana-ibm-apm) to provide APM and ICP observability in Grafana.  
 
 More information anout the IBM APM solution for ICP is here [IBMAPM](https://developer.ibm.com/apm/docs/apm-and-ibm-cloud-monitoring/)
