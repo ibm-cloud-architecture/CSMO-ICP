@@ -1,0 +1,7 @@
+spec:
+  template:
+    spec:
+      containers:
+      - name: grafana
+        securityContext:
+          runAsUser: 0
