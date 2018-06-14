@@ -33,7 +33,7 @@ $ helm version --tls
 Client: &version.Version{SemVer:"v2.7.2+icp", GitCommit:"d41a5c2da480efc555ddca57d3972bcad3351801", GitTreeState:"dirty"}
 Server: &version.Version{SemVer:"v2.7.3+icp", GitCommit:"27442e4cfd324d8f82f935fe0b7b492994d4c289", GitTreeState:"dirty"}
 ```
-Note, that Helm client version should match Tiller version installed on ICP. As you can see lower client version may also work.
+Note, that Helm client version should match Tiller version installed on ICP. Lower client version may also work.
  
 3). Configure PersistentVolume where Grafana configuration will be stored.
 
