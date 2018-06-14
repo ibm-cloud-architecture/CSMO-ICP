@@ -141,7 +141,7 @@ kubectl delete pod <g5-grafana-pod-name>
 
 Logon again to Grafana and verify that datasource plugin has been installed.
 
-##Uninstallation
+## Uninstallation
 
 Delete helm release:
 
