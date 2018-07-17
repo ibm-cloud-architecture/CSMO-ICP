@@ -71,7 +71,7 @@ root@csmo-s03-rs:~# influx –username prometheus –password passw0rd
 Connected to http://localhost:8086 version 1.6.0
 InfluxDB shell version: 1.6.0
 
-> SELECT "value" FROM "prometheus1"."autogen"."node_memory_MemFree" WHERE time > now() - 2m group by "instance"
+> SELECT "value" FROM "prometheus"."autogen"."node_memory_MemFree" WHERE time > now() - 2m group by "instance"
 name: node_memory_MemFree
 tags: instance=172.16.246.225:9100
 time                value
