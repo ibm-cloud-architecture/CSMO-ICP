@@ -8,7 +8,7 @@ spec:
   capacity:
     storage: 1Gi
   hostPath:
-    path: /tmp/grafana-data
+    path: /opt/grafana-data
     type: ""
   persistentVolumeReclaimPolicy: Recycle
   storageClassName: g5
