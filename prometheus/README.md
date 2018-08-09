@@ -71,6 +71,6 @@ To see the list of rules you must access the Prometheus dashboard through a prox
 3. Open `http://localhost:9090/alerts` to access Prometheus from your browser and see the available alerts (both fired and un-fired)
 
 
-***Trouble shooting***
+**Trouble shooting**
 
 Your ICP installation might end up requiring more Prometheus resources than you initially have allocated. This may result in the Prometheus pod crashing as it tries to over-allocate memeory. [This document](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/prometheus/update_resources.md) will guide you in allocating more resources.
