@@ -45,8 +45,9 @@ Basic documentation on the creation of Prometheus rules can be found in the [Pro
 
 ****Loading new rules into Prometheus****
 
-If you have ICP 2.1.0.2 or higher, which uses Prometheus 2.x, use the [instructions here](https://github.com/ibm-cloud-architecture/CSMO-ICP/tree/master/prometheus/alerts_prometheus2.x).
-If you have ICP 2.1.0.1 or lower, which uses Prometheus 1.x, use the [instructions here](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/prometheus/alerts_prometheus1.x.md).
+* If you have ICP 2.1.0.2 or higher, which uses Prometheus 2.x, use the [instructions here](https://github.com/ibm-cloud-architecture/CSMO-ICP/tree/master/prometheus/alerts_prometheus2.x).
+
+* If you have ICP 2.1.0.1 or lower, which uses Prometheus 1.x, use the [instructions here](https://github.com/ibm-cloud-architecture/CSMO-ICP/blob/master/prometheus/alerts_prometheus1.x.md).
 
 
 ****Viewing alerts in Prometheus****
