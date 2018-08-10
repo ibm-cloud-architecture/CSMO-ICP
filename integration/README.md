@@ -61,3 +61,6 @@ old file:
  3. Start the Messagebus probe and verify that it is listening on the correct port
  4. Modify the AlertManager ConfigMap so that it will send alerts to the probe
  
+
+***Configuring Cloud Event Manager to recieve ICP alerts***
+Here's an [article about integrating ICP alerts with CEM](https://medium.com/@niklaushirt/ibm-cloud-private-alerting-with-prometheus-bc01e2f9b518).
