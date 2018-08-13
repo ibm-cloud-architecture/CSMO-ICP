@@ -1,0 +1,277 @@
+[
+  {
+    "_id": "AWQDOwNEh_EaTNyNR7-c",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Cloud Foundry",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":5,\"id\":\"AWQDKFSWh_EaTNyNR4DW\",\"panelIndex\":1,\"row\":1,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"AWQDOBxbh_EaTNyNR7Xh\",\"panelIndex\":2,\"row\":1,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"columns\":[\"@type\",\"@source.component\",\"@message\"],\"id\":\"AWQCb_hKh_EaTNyNRRja\",\"panelIndex\":3,\"row\":4,\"size_x\":12,\"size_y\":5,\"sort\":[\"@timestamp\",\"desc\"],\"type\":\"search\"},{\"col\":9,\"id\":\"AWQX0mNmh_EaTNyNjEWW\",\"panelIndex\":5,\"row\":1,\"size_x\":4,\"size_y\":3,\"type\":\"visualization\"}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-2\":{\"spy\":{\"mode\":{\"fill\":false,\"name\":null}}}}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"match_all\":{}}}],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  },
+  {
+    "_id": "AWQX3spYh_EaTNyNjG8q",
+    "_type": "dashboard",
+    "_source": {
+      "title": "CF Platform - Nginx",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":1,\"id\":\"AWQXd6xih_EaTNyNixZR\",\"panelIndex\":1,\"row\":1,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"col\":7,\"id\":\"AWQX2QsOh_EaTNyNjFs9\",\"panelIndex\":3,\"row\":1,\"size_x\":6,\"size_y\":3,\"type\":\"visualization\"},{\"size_x\":12,\"size_y\":3,\"panelIndex\":4,\"type\":\"visualization\",\"id\":\"23ab60c0-762d-11e8-abce-178dd749781c\",\"col\":1,\"row\":4}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"$state\":{\"store\":\"appState\"},\"query\":{\"match_all\":{}}},{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  },
+  {
+    "_id": "8eeb72d0-77ae-11e8-9a26-69e6ce74c2de",
+    "_type": "dashboard",
+    "_source": {
+      "title": "CF Application - Response Time",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":1,\"id\":\"6963f980-77ac-11e8-9a26-69e6ce74c2de\",\"panelIndex\":1,\"row\":4,\"size_x\":12,\"size_y\":3,\"type\":\"visualization\"},{\"col\":1,\"id\":\"397c6a70-77ae-11e8-9a26-69e6ce74c2de\",\"panelIndex\":2,\"row\":1,\"size_x\":12,\"size_y\":3,\"type\":\"visualization\"}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-1\":{\"vis\":{\"colors\":{\"50th percentile of rtr.response_time_sec\":\"#E24D42\",\"99th percentile of Percentiles of CF application response time (seconds)\":\"#629E51\",\"99th percentile of rtr.response_time_sec\":\"#508642\"}}}}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  },
+  {
+    "_id": "AWQDJJa8h_EaTNyNR3NO",
+    "_type": "search",
+    "_source": {
+      "title": "vcap-nginx-access",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "@source.component"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"logstash-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"query_string\":{\"query\":\"@source.component: vcap_nginx_access\",\"analyze_wildcard\":true}},\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWQXh4aHh_EaTNyNi0tS",
+    "_type": "search",
+    "_source": {
+      "title": "cf_application",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "@source.type",
+        "@source.component",
+        "@message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"logstash-*\",\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647},\"query\":{\"query_string\":{\"query\":\"@source.type: cf_application\",\"analyze_wildcard\":true}},\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  },
+  {
+    "_id": "AWQXhyFbh_EaTNyNi0l3",
+    "_type": "search",
+    "_source": {
+      "title": "cf_platform",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "@source.type",
+        "@source.component",
+        "@message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"logstash-*\",\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647},\"query\":{\"query_string\":{\"query\":\"@source.type: cf_platform\",\"analyze_wildcard\":true}},\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  },
+  {
+    "_id": "AWQCb_hKh_EaTNyNRRja",
+    "_type": "search",
+    "_source": {
+      "title": "All",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "@source.type",
+        "@source.component",
+        "@message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"logstash-*\",\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647},\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  },
+  {
+    "_id": "f8db2550-77a9-11e8-9a26-69e6ce74c2de",
+    "_type": "search",
+    "_source": {
+      "title": "cf_application router logs",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "_source"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"logstash-*\",\"highlightAll\":true,\"version\":true,\"filter\":[],\"query\":{\"query_string\":{\"query\":\"@source.component: RTR\",\"analyze_wildcard\":true}}}"
+      }
+    }
+  },
+  {
+    "_id": "AWQDOBxbh_EaTNyNR7Xh",
+    "_type": "visualization",
+    "_source": {
+      "title": "Log count by source host",
+      "visState": "{\"title\":\"Log count by source host\",\"type\":\"pie\",\"params\":{\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"isDonut\":true,\"type\":\"pie\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"@source.host.keyword\",\"size\":20,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "AWQCb_hKh_EaTNyNRRja",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWQX0mNmh_EaTNyNjEWW",
+    "_type": "visualization",
+    "_source": {
+      "title": "Log count by CF platform component",
+      "visState": "{\"title\":\"Log count by CF platform component\",\"type\":\"pie\",\"params\":{\"addLegend\":true,\"addTooltip\":true,\"isDonut\":true,\"legendPosition\":\"right\",\"type\":\"pie\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"@source.component.keyword\",\"size\":20,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[],\"index\":\"logstash-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"query_string\":{\"query\":\"@source.type: cf_platform\",\"analyze_wildcard\":true}}}"
+      }
+    }
+  },
+  {
+    "_id": "AWQDKFSWh_EaTNyNR4DW",
+    "_type": "visualization",
+    "_source": {
+      "title": "Log count by CF application log type",
+      "visState": "{\"title\":\"Log count by CF application log type\",\"type\":\"pie\",\"params\":{\"addLegend\":true,\"addTooltip\":true,\"isDonut\":true,\"legendPosition\":\"right\",\"type\":\"pie\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"@source.component.keyword\",\"size\":20,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[],\"index\":\"logstash-*\",\"highlightAll\":true,\"version\":true,\"query\":{\"query_string\":{\"query\":\"@source.type: cf_application\",\"analyze_wildcard\":true}}}"
+      }
+    }
+  },
+  {
+    "_id": "397c6a70-77ae-11e8-9a26-69e6ce74c2de",
+    "_type": "visualization",
+    "_source": {
+      "title": "CF Application: Average Response Time per Application",
+      "visState": "{\"title\":\"CF Application: Average Response Time per Application\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{\"text\":\"@timestamp per 30 seconds\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"title\":{\"text\":\"Average response time per CF application\"}}],\"seriesParams\":[{\"show\":\"true\",\"type\":\"line\",\"mode\":\"normal\",\"data\":{\"label\":\"Average response time per CF application\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"avg\",\"schema\":\"metric\",\"params\":{\"field\":\"rtr.response_time_sec\",\"customLabel\":\"Average response time per CF application\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@timestamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_bounds\":{}}},{\"id\":\"4\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"@source.host.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "f8db2550-77a9-11e8-9a26-69e6ce74c2de",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "6963f980-77ac-11e8-9a26-69e6ce74c2de",
+    "_type": "visualization",
+    "_source": {
+      "title": "CF Application: Response Time Percentiles",
+      "visState": "{\"title\":\"CF Application: Response Time Percentiles\",\"type\":\"histogram\",\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"rotate\":0,\"show\":true,\"truncate\":1000},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"CF application instance\"},\"type\":\"category\"}],\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"legendPosition\":\"right\",\"orderBucketsBySum\":false,\"seriesParams\":[{\"data\":{\"id\":\"1\",\"label\":\"Percentiles of CF application response time (seconds)\"},\"drawLinesBetweenPoints\":true,\"mode\":\"normal\",\"show\":\"true\",\"showCircles\":true,\"type\":\"histogram\",\"valueAxis\":\"ValueAxis-1\"}],\"times\":[],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Percentiles of CF application response time (seconds)\"},\"type\":\"value\"}]},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"percentiles\",\"schema\":\"metric\",\"params\":{\"field\":\"rtr.response_time_sec\",\"percents\":[50,95,99],\"customLabel\":\"Percentiles of CF application response time (seconds)\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"@source.host.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"_term\",\"customLabel\":\"CF application instance\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{\"vis\":{\"colors\":{\"50th percentile of rtr.response_time_sec\":\"#E24D42\",\"99th percentile of rtr.response_time_sec\":\"#508642\"}}}",
+      "description": "",
+      "savedSearchId": "f8db2550-77a9-11e8-9a26-69e6ce74c2de",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWQX2QsOh_EaTNyNjFs9",
+    "_type": "visualization",
+    "_source": {
+      "title": "CF Platform: Nginx - Bytes Sent",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{\"field\":\"nginx.bytes\"},\"schema\":\"metric\",\"type\":\"avg\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"customInterval\":\"2h\",\"extended_bounds\":{},\"field\":\"@timestamp\",\"interval\":\"auto\",\"min_doc_count\":1},\"schema\":\"segment\",\"type\":\"date_histogram\"}],\"listeners\":{},\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"@timestamp per 30 seconds\"},\"type\":\"category\"}],\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"legendPosition\":\"right\",\"seriesParams\":[{\"data\":{\"id\":\"1\",\"label\":\"Average nginx.bytes\"},\"drawLinesBetweenPoints\":true,\"mode\":\"normal\",\"show\":\"true\",\"showCircles\":true,\"type\":\"line\",\"valueAxis\":\"ValueAxis-1\"}],\"times\":[],\"type\":\"line\",\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Average nginx.bytes\"},\"type\":\"value\"}]},\"title\":\"CF Platform: Nginx - Bytes Sent\",\"type\":\"line\"}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "AWQDJJa8h_EaTNyNR3NO",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "AWQXd6xih_EaTNyNixZR",
+    "_type": "visualization",
+    "_source": {
+      "title": "CF Platform: Nginx - Response Time",
+      "visState": "{\"aggs\":[{\"enabled\":true,\"id\":\"1\",\"params\":{\"field\":\"nginx.response_time\"},\"schema\":\"metric\",\"type\":\"avg\"},{\"enabled\":true,\"id\":\"2\",\"params\":{\"customInterval\":\"2h\",\"extended_bounds\":{},\"field\":\"@timestamp\",\"interval\":\"auto\",\"min_doc_count\":1},\"schema\":\"segment\",\"type\":\"date_histogram\"}],\"listeners\":{},\"params\":{\"addLegend\":true,\"addTimeMarker\":false,\"addTooltip\":true,\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"labels\":{\"show\":true,\"truncate\":100},\"position\":\"bottom\",\"scale\":{\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"@timestamp per 30 seconds\"},\"type\":\"category\"}],\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"legendPosition\":\"right\",\"seriesParams\":[{\"data\":{\"id\":\"1\",\"label\":\"Average nginx.response_time\"},\"drawLinesBetweenPoints\":true,\"mode\":\"normal\",\"show\":\"true\",\"showCircles\":true,\"type\":\"line\",\"valueAxis\":\"ValueAxis-1\"}],\"times\":[],\"type\":\"line\",\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"labels\":{\"filter\":false,\"rotate\":0,\"show\":true,\"truncate\":100},\"name\":\"LeftAxis-1\",\"position\":\"left\",\"scale\":{\"mode\":\"normal\",\"type\":\"linear\"},\"show\":true,\"style\":{},\"title\":{\"text\":\"Average nginx.response_time\"},\"type\":\"value\"}]},\"title\":\"CF Platform: Nginx - Response Time\",\"type\":\"line\"}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "AWQDJJa8h_EaTNyNR3NO",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  },
+  {
+    "_id": "23ab60c0-762d-11e8-abce-178dd749781c",
+    "_type": "visualization",
+    "_source": {
+      "title": "CF Platform: Nginx - Top URLs",
+      "visState": "{\"title\":\"CF Platform: Nginx - Top URLs\",\"type\":\"histogram\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#eee\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-1\",\"type\":\"category\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":200},\"title\":{\"text\":\"CF platform Nginx - top URLs\"}}],\"valueAxes\":[{\"id\":\"ValueAxis-1\",\"name\":\"LeftAxis-1\",\"type\":\"value\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\",\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":75,\"filter\":true,\"truncate\":100},\"title\":{\"text\":\"Number of requests\"}}],\"seriesParams\":[{\"show\":true,\"type\":\"histogram\",\"mode\":\"normal\",\"data\":{\"label\":\"Number of requests\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"Number of requests\"}},{\"id\":\"2\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"nginx.url.keyword\",\"size\":5,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"CF platform Nginx - top URLs\"}}],\"listeners\":{}}",
+      "uiStateJSON": "{}",
+      "description": "",
+      "savedSearchId": "AWQDJJa8h_EaTNyNR3NO",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[]}"
+      }
+    }
+  }
+]

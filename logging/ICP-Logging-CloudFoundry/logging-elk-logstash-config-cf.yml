@@ -1,0 +1,422 @@
+apiVersion: v1
+data:
+  k8s.conf: |-
+    input {
+      beats {
+        port => 5044
+      }
+      tcp {
+        port => 5000
+        type => cf
+      }
+    }
+
+    filter {
+      if [type] == "kube-logs" {
+        mutate {
+          rename => { "message" => "log" }
+          remove_field => ["host"]
+        }
+
+        date {
+          match => ["time", "ISO8601"]
+        }
+
+        # Sample:
+        # tiller-1279707952-sgd08_kube-system_tiller-0c51282d195d1c21307f6a48b9118d690441cda498fc5a2790c043407eab235b.log
+        # filebeat-j357d_default_filebeat-1a3113e374ad7937a3efa36c4bb42b46b976bcd7cd96223e6b9e6e3df08d802a.log
+        # appstdoutpod_default_app-stdout-container-01c2e7a7b105d9141825ea3ae5634b580fdd20a5a4ee890cdbe0816ca002623c.log
+        # unified-router-4047118581-sm913_kube-system_unified-router-ddda8a8cbcb74c45b64a4b18997b4f2928c998a37e45037cd0304eaa56d1634f.log
+        dissect {
+          mapping => {
+            "source" => "/var/log/containers/%{kubernetes.pod}_%{kubernetes.namespace}_%{container_file_ext}"
+          }
+        }
+
+        dissect {
+          mapping => {
+            "container_file_ext" => "%{container}.%{?file_ext}"
+          }
+          remove_field => ["host", "container_file_ext"]
+        }
+
+        grok {
+          "match" => {
+            "container" => "^%{DATA:kubernetes.container_name}-(?<kubernetes.container_id>[0-9A-Za-z]{64,64})"
+          }
+          remove_field => ["container"]
+        }
+      }
+    }
+
+    filter {
+      # Drop empty lines
+      if [log] =~ /^\s*$/ {
+        drop { }
+      }
+      # Attempt to parse JSON, but ignore failures and pass entries on as-is
+      json {
+        source => "log"
+        skip_on_invalid_json => true
+      }
+    }
+
+
+    filter {
+    if [type] == "cf" {
+      grok {
+        match => { "message" => "(?:%{INT:syslog_length} )?%{SYSLOG5424PRI}%{NONNEGINT:syslog5424_ver} +(?:%{TIMESTAMP_ISO8601:syslog_timestamp}|-) +(?:%{HOSTNAME:syslog_hostname}|-) +(?:%{NOTSPACE:cfapp}|-) +(?:%{NOTSPACE:cfapp_logtype}|-) +(?:%{NOTSPACE}|-) +(?:%{NOTSPACE}|-) +%{GREEDYDATA:syslog_message}" }
+        match => {"message" => "%{SYSLOG5424PRI:syslog_pri}(?:%{TIMESTAMP_ISO8601:syslog_timestamp}|-) +(?:%{IPORHOST:syslog_hostname}|-) +(?:%{NOTSPACE:syslog_program}|-) %{GREEDYDATA:syslog_message}" }
+        tag_on_failure => ["_grokparsefailure_syslog"]
+      }
+
+      if !("_grokparsefailure_syslog" in [tags]) {
+        syslog_pri { }
+        date {
+          match => [ "syslog_timestamp", "MMM  d HH:mm:ss", "MMM dd HH:mm:ss", "ISO8601" ]
+          timezone => "UTC"
+          remove_field => "syslog_timestamp"
+        }
+
+        # Populate @source.host
+        mutate {
+          add_field => [ "[@source][host]", "%{syslog_hostname}" ]
+        }
+        mutate {
+          rename => { "syslog_message" => "@message" }
+        }
+      } else { #remove to catch parsing failures
+      drop {}
+      }
+      
+      # Replace the unicode empty character \u0000 with ""
+      # Drop useless logs
+      mutate {
+        gsub => [ "@message", '\u0000', ""]
+      }
+      if [@message] =~ /^\s*$/ or [@message] =~ /^#.*$/ {
+        drop { }
+      }
+
+      mutate {
+        add_field => { "[@source][type]" => "cf_platform" } # by default logs go to 'cf_platform'
+      }
+
+      if ([cfapp_logtype])  {
+        mutate {
+          update => { "[@source][type]" => "cf_application" }
+        }
+      }
+
+      ##------------------------------
+      # CF Platform conf. 
+      ##------------------------------
+      if [@source][type] == "cf_platform" {
+
+        mutate {
+          add_field => { "[@source][component]" => "%{syslog_program}" }
+          add_tag => "platform"
+        }
+        grok {
+          match => [ "@message", "\[job=%{NOTSPACE:[@source][job]} index=%{INT:[@source][index]:int}\]%{SPACE}%{GREEDYDATA:@message}" ]
+          overwrite => [ "@message" ] 
+          tag_on_failure => "fail/cloudfoundry/platform/grok"
+        }
+
+        if !("fail/cloudfoundry/platform/grok" in [tags]) {
+          mutate {
+            add_tag => "cf"
+          }
+        }
+      }
+
+      if [@source][type] == "cf_application" {
+        grok {
+          match => { "cfapp_logtype" => "^\[%{DATA:[@source][component]}((/%{DATA})?)(%{INT:cf_instance})?\]$" }
+          remove_tag => ["_grokparsefailure"]
+          break_on_match => false
+        }
+        if [@source][component] == "RTR" {
+          grok {
+            #match => { "@message" => "\[%{TIMESTAMP_ISO8601:rtr_ts}\] (\\)?\"%{DATA:HTTPMETHOD} %{DATA:URL} %{DATA:HTTPVER}(\\)?\" %{INT:HTTPCODE} %{INT:bytesreq} %{INT:bytessent} (\\)?\"%{DATA}(\\)?\" (\\)?\"%{DATA:useragent}(\\)?\" \"?%{DATA:IP}:%{NUMBER:PORT}\"? %{GREEDYDATA:message}" }
+            match => { "@message" => "\[(?<rtr_time>%{YEAR}-%{MONTHNUM}-%{MONTHDAY}T%{TIME}+%{INT})\] \"%{WORD:[rtr][verb]} %{URIPATHPARAM:[rtr][path]} %{PROG:[rtr][http_spec]}\" %{BASE10NUM:[rtr][status]:int} %{BASE10NUM:[rtr][request_bytes_received]:int} %{BASE10NUM:[rtr][body_bytes_sent]:int} \"%{GREEDYDATA:[rtr][referer]}\" \"%{GREEDYDATA:[rtr][http_user_agent]}\" \"%{IPORHOST:[rtr][src][host]}:%{POSINT:[rtr][src][port]:int}\" \"%{IPORHOST:[rtr][dst][host]}:%{POSINT:[rtr][dst][port]:int}\" x_forwarded_for:\"%{GREEDYDATA:[rtr][x_forwarded_for]}\" x_forwarded_proto:\"%{GREEDYDATA:[rtr][x_forwarded_proto]}\" vcap_request_id:\"%{NOTSPACE:[rtr][vcap_request_id]}\" response_time:%{NUMBER:[rtr][response_time_sec]:float} app_id:\"%{NOTSPACE:[rtr][app][id]}\" app_index:\"%{BASE10NUM:[rtr][app][index]:int}\""}
+            remove_tag => ["_grokparsefailure"]
+            break_on_match => false
+          }
+        } # RTR
+        else if [@source][component] == "APP" {
+          grok {
+            match => { "@message" => "%{TIMESTAMP_ISO8601:app_ts}%{SPACE}%{DATA:log_level} %{GREEDYDATA:app_message}"}
+            remove_tag => ["_grokparsefailure"]
+            break_on_match => false
+          }
+          mutate {
+            rename => { "app_message" => "@message" }
+          }
+        } # APP
+      }
+
+      ##----------------------------------
+      # Haproxy conf. Parses haproxy logs.|
+      ##----------------------------------
+      if [@source][component] == "haproxy" {
+
+        mutate {
+          replace => { "@type" => "haproxy" }
+          add_tag => "haproxy"
+        }
+
+        # Grok patterns are based on http://www.haproxy.org/download/1.7/doc/configuration.txt
+        # Two formats are used accordingly:
+        # 8.2.3. HTTP log format
+        # 8.2.5. Error log format
+        grok {
+          match => [ "@message", "%{IP:[haproxy][client_ip]}:%{INT:[haproxy][client_port]:int} \[%{DATA:[haproxy][accept_date]}\] %{NOTSPACE:[haproxy][frontend_name]} %{NOTSPACE:[haproxy][backend_name]}/%{NOTSPACE:[haproxy][server_name]} %{INT:[haproxy][time_request]:int}/%{INT:[haproxy][time_queue]:int}/%{INT:[haproxy][time_backend_connect]:int}/%{INT:[haproxy][time_backend_response]:int}/%{INT:[haproxy][time_duration]:int} %{INT:[haproxy][http_status_code]:int} %{NOTSPACE:[haproxy][bytes_read]:int} %{DATA:[haproxy][captured_request_cookie]} %{DATA:[haproxy][captured_response_cookie]} %{NOTSPACE:[haproxy][termination_state]} %{INT:[haproxy][actconn]:int}/%{INT:[haproxy][feconn]:int}/%{INT:[haproxy][beconn]:int}/%{INT:[haproxy][srvconn]:int}/%{NOTSPACE:[haproxy][retries]:int} %{INT:[haproxy][srv_queue]:int}/%{INT:[haproxy][backend_queue]:int} (\{%{DATA:[haproxy][captured_request_headers]}\})?( )?(\{%{DATA:[haproxy][captured_response_headers]}\})?( )?\"(?<message>(?<haproxy_http_request>(<BADREQ>|((%{WORD:[haproxy][http_request_verb]})?( %{GREEDYDATA})?))))\"" ]
+          match => [ "@message", "%{IP:[haproxy][client_ip]}:%{INT:[haproxy][client_port]:int} \[%{DATA:[haproxy][accept_date]}\] %{NOTSPACE:[haproxy][frontend_name]}/%{NOTSPACE:[haproxy][bind_name]}:%{SPACE}%{GREEDYDATA:message}" ]
+          tag_on_failure => "fail/cloudfoundry/platform-haproxy/grok"
+        }
+
+        if !("fail/cloudfoundry/platform-haproxy/grok" in [tags]) {
+
+          if [haproxy_http_request] {
+            mutate {
+              rename => {"haproxy_http_request" => "[haproxy][http_request]"}
+            }
+          }
+
+          mutate {
+            rename => {"message" => "@message"} # @message
+          }
+
+          # @level
+          if [haproxy][http_status_code] {
+            if [haproxy][http_status_code] >= 400 {
+              mutate {
+                add_field => { "@level" => "ERROR" }
+              }
+            } else {
+              mutate {
+                add_field => { "@level" => "INFO" }
+              }
+            }
+          }
+        }
+      }
+
+      ##----------------------------------
+      # vcap_nginx_access                 |
+      ##----------------------------------
+
+      if [@source][component] == "vcap_nginx_access" {
+        grok {
+          match => {
+            "@message" =>
+            "%{IPORHOST:[nginx][remote_ip]} - \[%{HTTPDATE:[nginx][timestamp]}\] \"%{WORD:[nginx][method]} %{DATA:[nginx][url]} HTTP/%{NUMBER:[nginx][http_version]}\" %{NUMBER:[nginx][response_code]:int} %{NUMBER:[nginx][bytes]:int} \"%{DATA:[nginx][referrer]}\" \"%{DATA:[nginx][agent]}\" %{IPORHOST} vcap_request_id:%{NOTSPACE:[nginx][vcap_request_id]} userid:%{NOTSPACE:[nginx][userid]} clientid:%{NOTSPACE:[nginx][clientid]} response_time:%{NUMBER:[nginx][response_time]:float}"}
+            tag_on_failure => "fail/cloudfoundry/platform-nginx/grok"
+          }
+        }
+
+        ##--------------------------
+        # Uaa conf. Parses uaa logs.|
+        ##--------------------------
+        if [@source][component] == "vcap.uaa" {
+          mutate {
+            replace => { "[@source][component]" => "uaa" } # remove vcap. prefix
+            replace => { "@type" => "uaa" }
+            add_tag => "uaa"
+          }
+
+          grok {
+            match => { "@message" => "\[%{TIMESTAMP_ISO8601:[uaa][timestamp]}\]%{SPACE}uaa%{SPACE}-%{SPACE}%{NUMBER:[uaa][pid]:int}%{SPACE}\[%{DATA:[uaa][thread]}\]%{SPACE}....%{SPACE}%{LOGLEVEL:@level}%{SPACE}---%{SPACE}%{DATA:[uaa][log_category]}:%{SPACE}%{GREEDYDATA:@message}"}
+            overwrite => ["@message", "@level"] # @message, @level
+            tag_on_failure => "fail/cloudfoundry/platform-uaa/grok"
+          }
+
+          if [uaa][log_category] == "Audit" {
+
+            # override
+            mutate {
+              replace => { "@type" => "uaa-audit" }
+              add_tag => "audit"
+            }
+
+            # ---- Additional parsing: Audit events
+            grok {
+              match => { "@message" => "(?<uaa_audit_message>(%{WORD:[uaa][audit][type]}%{SPACE}\('%{DATA:[uaa][audit][data]}'\))):%{SPACE}principal=%{DATA:[uaa][audit][principal]},%{SPACE}origin=\[%{DATA:[uaa][audit][origin]}\],%{SPACE}identityZoneId=\[%{DATA:[uaa][audit][identity_zone_id]}\]"}
+              tag_on_failure => "fail/cloudfoundry/platform-uaa/audit/grok"
+            }
+
+            if !("fail/cloudfoundry/platform-uaa/audit/grok" in [tags]) {
+
+              # Audit @message
+              mutate {
+                rename => { "uaa_audit_message" => "@message" }
+              }
+
+              # extract audit_event_remote_address and geoip it
+              if "PrincipalAuthenticationFailure" == [uaa][audit][type] {
+                mutate {
+                  add_field => { "[uaa][audit][remote_address]" => "%{[uaa][audit][origin]}" }
+                }
+              }
+              if [uaa][audit][origin] =~ /remoteAddress=/ {
+                grok {
+                  match => { "[uaa][audit][origin]" => "remoteAddress=%{IP:[uaa][audit][remote_address]}" }
+                }
+              }
+              if [uaa][audit][remote_address] {
+                geoip {
+                  source => "[uaa][audit][remote_address]"
+                }
+              }
+
+              # split origin
+              mutate {
+                split =>  { "[uaa][audit][origin]" => ", " }
+              }
+
+            }
+
+          }
+        }
+
+
+        ##-----------------------------
+        # Vcap conf. Parses vcap* logs.|
+        ##-----------------------------
+        if [@source][component] != "vcap.uaa" and [@source][component] =~ /vcap\..*/ {
+
+          # minus vcap. prefix
+          mutate {
+            gsub => ["[@source][component]", "^vcap\.", ""]
+          }
+
+          mutate {
+            replace => { "@type" => "vcap" }
+            add_tag => "vcap"
+          }
+
+          # Parse Cloud Foundry logs
+          if [@message] =~ /^\s*{".*}\s*$/ { # looks like JSON
+
+          # parse JSON message
+          json {
+            source => "@message"
+            target => "parsed_json_field"
+            remove_field => [ "@message" ]
+            add_field => { "parsed_json_field_name" => "%{[@source][component]}"}
+          }
+
+          if "_jsonparsefailure" in [tags] {
+            # Amend the failure tag to match our fail/${addon}/${filter}/${detail} standard
+            mutate {
+              add_tag => ["fail/cloudfoundry/platform-vcap/json"]
+              remove_tag => ["_jsonparsefailure"]
+            }
+
+          } else {
+
+            mutate {
+              rename => { "[parsed_json_field][message]" => "@message" } # @message
+            }
+
+            #
+            # @level 
+            # translate {
+            #   field => "[parsed_json_field][log_level]"
+            #   dictionary => [ "0", "DEBUG", "1", "INFO", "2", "ERROR", "3", "FATAL" ]
+            #   destination => "@level"
+            #   override => true
+            #   fallback => "%{[parsed_json_field][log_level]}"
+            #   remove_field => "[parsed_json_field][log_level]"
+            # }
+          }
+
+        }
+      }
+
+      mutate {
+        uppercase => [ "@level" ]
+      }
+
+      # -- Rework fields
+
+      if [@source][job] and [@source][index] {
+        mutate { add_field => { "[@source][vm]" => "%{[@source][job]}/%{[@source][index]}" } }
+      }
+
+      if [parsed_json_field] and [parsed_json_field_name] {
+        mutate {
+          lowercase => [ "parsed_json_field_name" ]
+          gsub => [ "parsed_json_field_name", "[\s/\\?#-\.]", "_" ]
+        }
+        mutate {
+          rename => { "parsed_json_field" => "%{parsed_json_field_name}" }
+        }
+      }
+
+      mutate {
+        remove_field => [ "parsed_json_field_name" ]
+      }
+
+      # Remove syslog_ fields
+      mutate {
+        remove_field => "syslog_pri"
+        remove_field => "syslog5424_pri"
+        remove_field => "syslog_facility"
+        remove_field => "syslog_facility_code"
+        remove_field => "syslog_message"
+        remove_field => "syslog_severity"
+        remove_field => "syslog_severity_code"
+        remove_field => "syslog_program"
+        remove_field => "syslog_timestamp"
+        remove_field => "syslog_hostname"
+        remove_field => "syslog_pid"
+        remove_field => "syslog5424_ver"
+        remove_field => "syslog5424_length"
+        remove_field => "syslog_length"
+      }
+
+      # Cleanup
+      mutate {
+        remove_field => [ "@version", "host", "port", "_logstash_input" ]
+      }
+    }}
+
+    output {
+      elasticsearch {
+        hosts => "elasticsearch:9200"
+        index => "logstash-%{+YYYY.MM.dd}"
+        document_type => "%{[@metadata][type]}"
+      }
+    }
+  logstash.yml-ppc: |-
+    # ppc64le-only config. Must not include refs to X-Pack.
+    config.reload.automatic: true
+    http.host: "0.0.0.0"
+    path.config: /usr/share/logstash/pipeline
+    xpack.monitoring.enabled: false
+
+    # end
+  logstash.yml-x86: |-
+    # x86-only config. Must include refs to X-Pack.
+    config.reload.automatic: true
+    http.host: "0.0.0.0"
+    path.config: /usr/share/logstash/pipeline
+    xpack.monitoring.enabled: false
+
+
+
+    # end
+kind: ConfigMap
+metadata:
+  labels:
+    app: logging-elk-elasticsearch
+    chart: ibm-icplogging-1.0.0
+    component: logstash
+    heritage: Tiller
+    release: logging
+  name: logging-elk-logstash-config
+  namespace: kube-system
+  resourceVersion: "1828"
+  selfLink: /api/v1/namespaces/kube-system/configmaps/logging-elk-logstash-config

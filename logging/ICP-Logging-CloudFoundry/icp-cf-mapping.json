@@ -1,0 +1,2071 @@
+{
+	"template": "logstash-*",
+	"mappings": {
+		"cf": {
+			"_all": {
+				"enabled": true,
+				"norms": false
+			},
+			"dynamic_templates": [
+				{
+					"message_field": {
+						"path_match": "message",
+						"match_mapping_type": "string",
+						"mapping": {
+							"norms": false,
+							"type": "text"
+						}
+					}
+				},
+				{
+					"string_fields": {
+						"match": "*",
+						"match_mapping_type": "string",
+						"mapping": {
+							"fields": {
+								"keyword": {
+									"ignore_above": 256,
+									"type": "keyword"
+								}
+							},
+							"norms": false,
+							"type": "text"
+						}
+					}
+				}
+			],
+			"properties": {
+				"@level": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"@message": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"@source": {
+					"properties": {
+						"component": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"host": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"index": {
+							"type": "long"
+						},
+						"job": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"type": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"vm": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"@timestamp": {
+					"type": "date",
+					"include_in_all": false
+				},
+				"@type": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"@version": {
+					"type": "keyword",
+					"include_in_all": false
+				},
+				"cloud_controller_ng": {
+					"properties": {
+						"data": {
+							"properties": {
+								"request_guid": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								}
+							}
+						},
+						"fiber_id": {
+							"type": "long"
+						},
+						"file": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"lineno": {
+							"type": "long"
+						},
+						"log_level": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"method": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"process_id": {
+							"type": "long"
+						},
+						"source": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"thread_id": {
+							"type": "long"
+						},
+						"timestamp": {
+							"type": "float"
+						}
+					}
+				},
+				"geoip": {
+					"dynamic": "true",
+					"properties": {
+						"ip": {
+							"type": "ip"
+						},
+						"latitude": {
+							"type": "half_float"
+						},
+						"location": {
+							"type": "geo_point"
+						},
+						"longitude": {
+							"type": "half_float"
+						}
+					}
+				},
+				"message": {
+					"type": "text",
+					"norms": false
+				},
+				"nginx": {
+					"properties": {
+						"agent": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"bytes": {
+							"type": "long"
+						},
+						"clientid": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"http_version": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"method": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"referrer": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"remote_ip": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"response_code": {
+							"type": "long"
+						},
+						"response_time": {
+							"type": "float"
+						},
+						"timestamp": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"url": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"userid": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"vcap_request_id": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"route_registrar_stdout": {
+					"properties": {
+						"data": {
+							"properties": {
+								"route": {
+									"properties": {
+										"HealthCheck": {
+											"properties": {
+												"Name": {
+													"type": "text",
+													"norms": false,
+													"fields": {
+														"keyword": {
+															"type": "keyword",
+															"ignore_above": 256
+														}
+													}
+												},
+												"ScriptPath": {
+													"type": "text",
+													"norms": false,
+													"fields": {
+														"keyword": {
+															"type": "keyword",
+															"ignore_above": 256
+														}
+													}
+												},
+												"Timeout": {
+													"type": "long"
+												}
+											}
+										},
+										"Name": {
+											"type": "text",
+											"norms": false,
+											"fields": {
+												"keyword": {
+													"type": "keyword",
+													"ignore_above": 256
+												}
+											}
+										},
+										"Port": {
+											"type": "long"
+										},
+										"RegistrationInterval": {
+											"type": "long"
+										},
+										"RouteServiceUrl": {
+											"type": "text",
+											"norms": false,
+											"fields": {
+												"keyword": {
+													"type": "keyword",
+													"ignore_above": 256
+												}
+											}
+										},
+										"Tags": {
+											"properties": {
+												"component": {
+													"type": "text",
+													"norms": false,
+													"fields": {
+														"keyword": {
+															"type": "keyword",
+															"ignore_above": 256
+														}
+													}
+												}
+											}
+										},
+										"URIs": {
+											"type": "text",
+											"norms": false,
+											"fields": {
+												"keyword": {
+													"type": "keyword",
+													"ignore_above": 256
+												}
+											}
+										}
+									}
+								},
+								"script": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"scriptPath": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"stderr": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"stdout": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								}
+							}
+						},
+						"log_level": {
+							"type": "long"
+						},
+						"source": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"timestamp": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"tags": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"type": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"uaa": {
+					"properties": {
+						"audit": {
+							"properties": {
+								"data": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"identity_zone_id": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"origin": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"principal": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"remote_address": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"type": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								}
+							}
+						},
+						"log_category": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"pid": {
+							"type": "long"
+						},
+						"thread": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"timestamp": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"_default_": {
+			"_all": {
+				"enabled": true,
+				"norms": false
+			},
+			"dynamic_templates": [
+				{
+					"message_field": {
+						"path_match": "message",
+						"match_mapping_type": "string",
+						"mapping": {
+							"norms": false,
+							"type": "text"
+						}
+					}
+				},
+				{
+					"string_fields": {
+						"match": "*",
+						"match_mapping_type": "string",
+						"mapping": {
+							"fields": {
+								"keyword": {
+									"ignore_above": 256,
+									"type": "keyword"
+								}
+							},
+							"norms": false,
+							"type": "text"
+						}
+					}
+				}
+			],
+			"properties": {
+				"@timestamp": {
+					"type": "date",
+					"include_in_all": false
+				},
+				"@version": {
+					"type": "keyword",
+					"include_in_all": false
+				},
+				"geoip": {
+					"dynamic": "true",
+					"properties": {
+						"ip": {
+							"type": "ip"
+						},
+						"latitude": {
+							"type": "half_float"
+						},
+						"location": {
+							"type": "geo_point"
+						},
+						"longitude": {
+							"type": "half_float"
+						}
+					}
+				}
+			}
+		},
+		"kube-logs": {
+			"_all": {
+				"enabled": true,
+				"norms": false
+			},
+			"dynamic_templates": [
+				{
+					"message_field": {
+						"path_match": "message",
+						"match_mapping_type": "string",
+						"mapping": {
+							"norms": false,
+							"type": "text"
+						}
+					}
+				},
+				{
+					"string_fields": {
+						"match": "*",
+						"match_mapping_type": "string",
+						"mapping": {
+							"fields": {
+								"keyword": {
+									"ignore_above": 256,
+									"type": "keyword"
+								}
+							},
+							"norms": false,
+							"type": "text"
+						}
+					}
+				}
+			],
+			"properties": {
+				"@timestamp": {
+					"type": "date",
+					"include_in_all": false
+				},
+				"@version": {
+					"type": "keyword",
+					"include_in_all": false
+				},
+				"beat": {
+					"properties": {
+						"hostname": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"name": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"version": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"client_ip": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"comment": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"geoip": {
+					"dynamic": "true",
+					"properties": {
+						"ip": {
+							"type": "ip"
+						},
+						"latitude": {
+							"type": "half_float"
+						},
+						"location": {
+							"type": "geo_point"
+						},
+						"longitude": {
+							"type": "half_float"
+						}
+					}
+				},
+				"handler": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"input_type": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"kubernetes": {
+					"properties": {
+						"container_id": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"container_name": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"namespace": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"pod": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"latency": {
+					"type": "float"
+				},
+				"level": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"log": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"message": {
+					"type": "text",
+					"norms": false
+				},
+				"method": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"msg": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"node": {
+					"properties": {
+						"hostname": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"offset": {
+					"type": "long"
+				},
+				"path": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"pid": {
+					"type": "long"
+				},
+				"pod": {
+					"properties": {
+						"ip": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"req": {
+					"properties": {
+						"headers": {
+							"properties": {
+								"accept": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"accept-encoding": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"accept-language": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"connection": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"content-length": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"content-type": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"dnt": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"host": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"kbn-version": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"origin": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"referer": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"upgrade-insecure-requests": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"user-agent": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"x-forwarded-for": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"x-forwarded-host": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"x-forwarded-proto": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"x-original-uri": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"x-real-ip": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"x-requested-with": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"x-scheme": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								}
+							}
+						},
+						"method": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"referer": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"remoteAddress": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"url": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"userAgent": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"req-id": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"res": {
+					"properties": {
+						"contentLength": {
+							"type": "long"
+						},
+						"responseTime": {
+							"type": "long"
+						},
+						"statusCode": {
+							"type": "long"
+						}
+					}
+				},
+				"source": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"statusCode": {
+					"type": "long"
+				},
+				"status_code": {
+					"type": "long"
+				},
+				"stream": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"tags": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"time": {
+					"type": "date"
+				},
+				"ts": {
+					"type": "date"
+				},
+				"type": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"user_agent": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				}
+			}
+		},
+		"%{[@metadata][type]}": {
+			"_all": {
+				"enabled": true,
+				"norms": false
+			},
+			"dynamic_templates": [
+				{
+					"message_field": {
+						"path_match": "message",
+						"match_mapping_type": "string",
+						"mapping": {
+							"norms": false,
+							"type": "text"
+						}
+					}
+				},
+				{
+					"string_fields": {
+						"match": "*",
+						"match_mapping_type": "string",
+						"mapping": {
+							"fields": {
+								"keyword": {
+									"ignore_above": 256,
+									"type": "keyword"
+								}
+							},
+							"norms": false,
+							"type": "text"
+						}
+					}
+				}
+			],
+			"properties": {
+				"@level": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"@message": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"@source": {
+					"properties": {
+						"component": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"host": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"index": {
+							"type": "long"
+						},
+						"job": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"type": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"vm": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"@timestamp": {
+					"type": "date",
+					"include_in_all": false
+				},
+				"@type": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"@version": {
+					"type": "keyword",
+					"include_in_all": false
+				},
+				"cfapp": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"cfapp_logtype": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"cloud_controller_ng": {
+					"properties": {
+						"data": {
+							"properties": {
+								"request_guid": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								}
+							}
+						},
+						"fiber_id": {
+							"type": "long"
+						},
+						"file": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"lineno": {
+							"type": "long"
+						},
+						"log_level": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"method": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"process_id": {
+							"type": "long"
+						},
+						"source": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"thread_id": {
+							"type": "long"
+						},
+						"timestamp": {
+							"type": "float"
+						}
+					}
+				},
+				"geoip": {
+					"dynamic": "true",
+					"properties": {
+						"ip": {
+							"type": "ip"
+						},
+						"latitude": {
+							"type": "half_float"
+						},
+						"location": {
+							"type": "geo_point"
+						},
+						"longitude": {
+							"type": "half_float"
+						}
+					}
+				},
+				"message": {
+					"type": "text",
+					"norms": false
+				},
+				"nginx": {
+					"properties": {
+						"agent": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"bytes": {
+							"type": "long"
+						},
+						"clientid": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"http_version": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"method": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"referrer": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"remote_ip": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"response_code": {
+							"type": "long"
+						},
+						"response_time": {
+							"type": "float"
+						},
+						"timestamp": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"url": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"userid": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"vcap_request_id": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"route_registrar_stdout": {
+					"properties": {
+						"data": {
+							"properties": {
+								"route": {
+									"properties": {
+										"HealthCheck": {
+											"properties": {
+												"Name": {
+													"type": "text",
+													"norms": false,
+													"fields": {
+														"keyword": {
+															"type": "keyword",
+															"ignore_above": 256
+														}
+													}
+												},
+												"ScriptPath": {
+													"type": "text",
+													"norms": false,
+													"fields": {
+														"keyword": {
+															"type": "keyword",
+															"ignore_above": 256
+														}
+													}
+												},
+												"Timeout": {
+													"type": "long"
+												}
+											}
+										},
+										"Name": {
+											"type": "text",
+											"norms": false,
+											"fields": {
+												"keyword": {
+													"type": "keyword",
+													"ignore_above": 256
+												}
+											}
+										},
+										"Port": {
+											"type": "long"
+										},
+										"RegistrationInterval": {
+											"type": "long"
+										},
+										"RouteServiceUrl": {
+											"type": "text",
+											"norms": false,
+											"fields": {
+												"keyword": {
+													"type": "keyword",
+													"ignore_above": 256
+												}
+											}
+										},
+										"Tags": {
+											"properties": {
+												"component": {
+													"type": "text",
+													"norms": false,
+													"fields": {
+														"keyword": {
+															"type": "keyword",
+															"ignore_above": 256
+														}
+													}
+												}
+											}
+										},
+										"URIs": {
+											"type": "text",
+											"norms": false,
+											"fields": {
+												"keyword": {
+													"type": "keyword",
+													"ignore_above": 256
+												}
+											}
+										}
+									}
+								},
+								"script": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"scriptPath": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"stderr": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"stdout": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								}
+							}
+						},
+						"log_level": {
+							"type": "long"
+						},
+						"source": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"timestamp": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"rtr": {
+					"properties": {
+						"app": {
+							"properties": {
+								"id": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"index": {
+									"type": "long"
+								}
+							}
+						},
+						"body_bytes_sent": {
+							"type": "long"
+						},
+						"dst": {
+							"properties": {
+								"host": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"port": {
+									"type": "long"
+								}
+							}
+						},
+						"http_spec": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"http_user_agent": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"path": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"referer": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"request_bytes_received": {
+							"type": "long"
+						},
+						"response_time_sec": {
+							"type": "float"
+						},
+						"src": {
+							"properties": {
+								"host": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"port": {
+									"type": "long"
+								}
+							}
+						},
+						"status": {
+							"type": "long"
+						},
+						"vcap_request_id": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"verb": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"x_forwarded_for": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"x_forwarded_proto": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				},
+				"rtr_time": {
+					"type": "date"
+				},
+				"tags": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"type": {
+					"type": "text",
+					"norms": false,
+					"fields": {
+						"keyword": {
+							"type": "keyword",
+							"ignore_above": 256
+						}
+					}
+				},
+				"uaa": {
+					"properties": {
+						"audit": {
+							"properties": {
+								"data": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"identity_zone_id": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"origin": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"principal": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"remote_address": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								},
+								"type": {
+									"type": "text",
+									"norms": false,
+									"fields": {
+										"keyword": {
+											"type": "keyword",
+											"ignore_above": 256
+										}
+									}
+								}
+							}
+						},
+						"log_category": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"pid": {
+							"type": "long"
+						},
+						"thread": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						},
+						"timestamp": {
+							"type": "text",
+							"norms": false,
+							"fields": {
+								"keyword": {
+									"type": "keyword",
+									"ignore_above": 256
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
