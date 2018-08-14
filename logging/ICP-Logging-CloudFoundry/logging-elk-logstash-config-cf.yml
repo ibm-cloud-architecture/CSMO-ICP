@@ -78,7 +78,6 @@ data:
           remove_field => "syslog_timestamp"
         }
 
-        # Populate @source.host
         mutate {
           add_field => [ "[@source][host]", "%{syslog_hostname}" ]
         }
@@ -89,8 +88,6 @@ data:
       drop {}
       }
       
-      # Replace the unicode empty character \u0000 with ""
-      # Drop useless logs
       mutate {
         gsub => [ "@message", '\u0000', ""]
       }
@@ -108,9 +105,6 @@ data:
         }
       }
 
-      ##------------------------------
-      # CF Platform conf. 
-      ##------------------------------
       if [@source][type] == "cf_platform" {
 
         mutate {
@@ -138,7 +132,6 @@ data:
         }
         if [@source][component] == "RTR" {
           grok {
-            #match => { "@message" => "\[%{TIMESTAMP_ISO8601:rtr_ts}\] (\\)?\"%{DATA:HTTPMETHOD} %{DATA:URL} %{DATA:HTTPVER}(\\)?\" %{INT:HTTPCODE} %{INT:bytesreq} %{INT:bytessent} (\\)?\"%{DATA}(\\)?\" (\\)?\"%{DATA:useragent}(\\)?\" \"?%{DATA:IP}:%{NUMBER:PORT}\"? %{GREEDYDATA:message}" }
             match => { "@message" => "\[(?<rtr_time>%{YEAR}-%{MONTHNUM}-%{MONTHDAY}T%{TIME}+%{INT})\] \"%{WORD:[rtr][verb]} %{URIPATHPARAM:[rtr][path]} %{PROG:[rtr][http_spec]}\" %{BASE10NUM:[rtr][status]:int} %{BASE10NUM:[rtr][request_bytes_received]:int} %{BASE10NUM:[rtr][body_bytes_sent]:int} \"%{GREEDYDATA:[rtr][referer]}\" \"%{GREEDYDATA:[rtr][http_user_agent]}\" \"%{IPORHOST:[rtr][src][host]}:%{POSINT:[rtr][src][port]:int}\" \"%{IPORHOST:[rtr][dst][host]}:%{POSINT:[rtr][dst][port]:int}\" x_forwarded_for:\"%{GREEDYDATA:[rtr][x_forwarded_for]}\" x_forwarded_proto:\"%{GREEDYDATA:[rtr][x_forwarded_proto]}\" vcap_request_id:\"%{NOTSPACE:[rtr][vcap_request_id]}\" response_time:%{NUMBER:[rtr][response_time_sec]:float} app_id:\"%{NOTSPACE:[rtr][app][id]}\" app_index:\"%{BASE10NUM:[rtr][app][index]:int}\""}
             remove_tag => ["_grokparsefailure"]
             break_on_match => false
@@ -156,57 +149,6 @@ data:
         } # APP
       }
 
-      ##----------------------------------
-      # Haproxy conf. Parses haproxy logs.|
-      ##----------------------------------
-      if [@source][component] == "haproxy" {
-
-        mutate {
-          replace => { "@type" => "haproxy" }
-          add_tag => "haproxy"
-        }
-
-        # Grok patterns are based on http://www.haproxy.org/download/1.7/doc/configuration.txt
-        # Two formats are used accordingly:
-        # 8.2.3. HTTP log format
-        # 8.2.5. Error log format
-        grok {
-          match => [ "@message", "%{IP:[haproxy][client_ip]}:%{INT:[haproxy][client_port]:int} \[%{DATA:[haproxy][accept_date]}\] %{NOTSPACE:[haproxy][frontend_name]} %{NOTSPACE:[haproxy][backend_name]}/%{NOTSPACE:[haproxy][server_name]} %{INT:[haproxy][time_request]:int}/%{INT:[haproxy][time_queue]:int}/%{INT:[haproxy][time_backend_connect]:int}/%{INT:[haproxy][time_backend_response]:int}/%{INT:[haproxy][time_duration]:int} %{INT:[haproxy][http_status_code]:int} %{NOTSPACE:[haproxy][bytes_read]:int} %{DATA:[haproxy][captured_request_cookie]} %{DATA:[haproxy][captured_response_cookie]} %{NOTSPACE:[haproxy][termination_state]} %{INT:[haproxy][actconn]:int}/%{INT:[haproxy][feconn]:int}/%{INT:[haproxy][beconn]:int}/%{INT:[haproxy][srvconn]:int}/%{NOTSPACE:[haproxy][retries]:int} %{INT:[haproxy][srv_queue]:int}/%{INT:[haproxy][backend_queue]:int} (\{%{DATA:[haproxy][captured_request_headers]}\})?( )?(\{%{DATA:[haproxy][captured_response_headers]}\})?( )?\"(?<message>(?<haproxy_http_request>(<BADREQ>|((%{WORD:[haproxy][http_request_verb]})?( %{GREEDYDATA})?))))\"" ]
-          match => [ "@message", "%{IP:[haproxy][client_ip]}:%{INT:[haproxy][client_port]:int} \[%{DATA:[haproxy][accept_date]}\] %{NOTSPACE:[haproxy][frontend_name]}/%{NOTSPACE:[haproxy][bind_name]}:%{SPACE}%{GREEDYDATA:message}" ]
-          tag_on_failure => "fail/cloudfoundry/platform-haproxy/grok"
-        }
-
-        if !("fail/cloudfoundry/platform-haproxy/grok" in [tags]) {
-
-          if [haproxy_http_request] {
-            mutate {
-              rename => {"haproxy_http_request" => "[haproxy][http_request]"}
-            }
-          }
-
-          mutate {
-            rename => {"message" => "@message"} # @message
-          }
-
-          # @level
-          if [haproxy][http_status_code] {
-            if [haproxy][http_status_code] >= 400 {
-              mutate {
-                add_field => { "@level" => "ERROR" }
-              }
-            } else {
-              mutate {
-                add_field => { "@level" => "INFO" }
-              }
-            }
-          }
-        }
-      }
-
-      ##----------------------------------
-      # vcap_nginx_access                 |
-      ##----------------------------------
-
       if [@source][component] == "vcap_nginx_access" {
         grok {
           match => {
@@ -216,9 +158,6 @@ data:
           }
         }
 
-        ##--------------------------
-        # Uaa conf. Parses uaa logs.|
-        ##--------------------------
         if [@source][component] == "vcap.uaa" {
           mutate {
             replace => { "[@source][component]" => "uaa" } # remove vcap. prefix
@@ -240,7 +179,6 @@ data:
               add_tag => "audit"
             }
 
-            # ---- Additional parsing: Audit events
             grok {
               match => { "@message" => "(?<uaa_audit_message>(%{WORD:[uaa][audit][type]}%{SPACE}\('%{DATA:[uaa][audit][data]}'\))):%{SPACE}principal=%{DATA:[uaa][audit][principal]},%{SPACE}origin=\[%{DATA:[uaa][audit][origin]}\],%{SPACE}identityZoneId=\[%{DATA:[uaa][audit][identity_zone_id]}\]"}
               tag_on_failure => "fail/cloudfoundry/platform-uaa/audit/grok"
@@ -280,13 +218,8 @@ data:
           }
         }
 
-
-        ##-----------------------------
-        # Vcap conf. Parses vcap* logs.|
-        ##-----------------------------
         if [@source][component] != "vcap.uaa" and [@source][component] =~ /vcap\..*/ {
 
-          # minus vcap. prefix
           mutate {
             gsub => ["[@source][component]", "^vcap\.", ""]
           }
@@ -338,8 +271,6 @@ data:
       mutate {
         uppercase => [ "@level" ]
       }
-
-      # -- Rework fields
 
       if [@source][job] and [@source][index] {
         mutate { add_field => { "[@source][vm]" => "%{[@source][job]}/%{[@source][index]}" } }
