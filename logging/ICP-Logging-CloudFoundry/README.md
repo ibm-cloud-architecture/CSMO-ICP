@@ -82,13 +82,13 @@ where `<logstash-port>` is the external NodePort configured for the `cflogs` ser
 
 
 ## Import provided Kibana objects
-Before importing Kibana objects (preefined searches, vizualizations and dashboards), make sure that `logstash-*` index has all the required fields.
+Before importing Kibana objects (predefined searches, vizualizations and dashboards), make sure that `logstash-*` index has all the required fields.
 
 Index fields are created dynamically when documents including these fields arrive for the first time to elasticsearch. Make sure that CloudFoundry platform log streaming is already configured and logs are sent to elasticsearch. Deploy also at least one CF application and genetate some web application requests, so CF application logs are generated and sent to elasticsearch. Verify that CF application log entries are available in Kibana search results and refresh field list in the index pattern `Management -> Index Patterns -> Refresh`
 
 Alternative way to define required index field is to import the index template.
 
-1). Import provided CSMO ICP CF logging solution index template - [icp-cf-mapping.json] (icp-cf-mapping.json):
+1). Import provided CSMO ICP CF logging solution index template - [icp-cf-mapping.json](icp-cf-mapping.json):
 
 ```
 curl -XPUT -H 'Content-Type: application/json' http://localhost:9200/_template/csmo_cloudfoundry -d@icp-cf-mapping.json
