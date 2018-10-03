@@ -1,6 +1,15 @@
 # CSMO logging solution for ICP Cloud Foundry
 
-ICP ELK configuration for ICP Cloud Foundry platform and application logs.
+[IBM Cloud Private Cloud Foundry](https://www.ibm.com/support/knowledgecenter/SSBS6K_2.1.0.3/cloud_foundry/overview.html) has the ability to capture logs from several platform components and from applications running on the Cloud Foundry platform, aggregate these logs, and export the data to an external log management and analysis system. You can read more about this in the Cloud Foundry documentation:
+
+- [Cloud Foundry application logging](https://docs.cloudfoundry.org/devguide/deploy-apps/streaming-logs.html)
+- [Loggregator system](https://docs.cloudfoundry.org/loggregator/architecture.html)
+- [Streaming Application Logs to Log Management Services](https://docs.cloudfoundry.org/devguide/services/log-management.html)
+ 
+
+IBM Cloud Private deploys an Elastic stack (aka ELK stack) to collect, store, search and visualize information coming from log files. Cloud Foundry can be configured to stream both platform and application log files to ICP Elastic stack.
+
+Follow the procedure below to configure ICP Elastic stack for Cloud Foundry platform and application logs. 
 
 ## Configure external access to ICP Logstash
 Create k8s service of type `NodePort` in order to provide an external access to ICP ELK logstash service. In the following example we assume that logstash tcp input listens on TCP port `5000`, externaly exposed on port `30384`.
