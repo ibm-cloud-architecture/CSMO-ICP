@@ -11,6 +11,7 @@
 		- [Logstash configuration](#logstash-configuration)
 	- [Using Kibana for log search and visualization](#using-kibana-for-log-search-and-visualization)
 - [CSMO logging solution for ICP Cloud Foundry](ICP-Logging-CloudFoundry)
+- [Further reading](#further-reading)
 
 # Introduction
 Application and systems logs can help you understand what is happening inside your ICP cluster. The logs are particularly useful for debugging problems and monitoring cluster activity. The easiest and most embraced logging method for containerized applications is to write to the standard output and standard error streams.
@@ -182,3 +183,7 @@ In the following example, the field **kubernetes.namespace** was used to render 
 [Import](https://www.elastic.co/guide/en/kibana/5.0/loading-a-saved-dashboard.html) attached Kibana [visualizations](Kibana-example-visualizations.json) and [dashboard](Kibana-example-dashboard.json) to learn how to build Kibana dashboards.
 
 ![](images/kibana-dashboard-example.png)
+
+# Further Reading
+* [How to configure Kubernetes audit log in IBM Cloud Private](https://medium.com/@epatro/how-to-configure-kubernetes-audit-log-in-ibm-cloud-private-22d237ddc071)
+* [Processing Logs with IBM Cloud Private and Cloud Automation Manager](https://developer.ibm.com/cloudautomation/tutorials/processing-logs-cloud-automation-manager/)
