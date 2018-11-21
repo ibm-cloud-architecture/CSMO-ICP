@@ -243,12 +243,12 @@ data:
             $labels.instance }}) instance will exhaust in file/socket descriptors soon'
           summary: File descriptors soon exhausted for the monitoring target
       - alert: ICPPodFrequentlyRestarting
-        expr: delta(kube_pod_container_status_restarts[1h]) > 2
+        expr: delta(kube_pod_container_status_restarts_total[1h]) > 2
         for: 10m
         labels:
           severity: warning
         annotations:
-          description: Pod {{$labels.namespaces}}/{{$labels.pod}} is was restarted {{$value}}
+          description: Pod {{$labels.namespaces}}/{{$labels.pod}} was restarted {{$value}}
             times within the last hour
           summary: Pod is restarting frequently
 kind: ConfigMap
