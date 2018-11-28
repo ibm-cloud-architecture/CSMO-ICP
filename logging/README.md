@@ -10,6 +10,7 @@
 		- [Log data storage and retention](#log-data-storage-and-retention)
 		- [Logstash configuration](#logstash-configuration)
 	- [Using Kibana for log search and visualization](#using-kibana-for-log-search-and-visualization)
+- [Collecting additional logs from worker nodes](#collecting-additional-logs-from-worker-nodes)
 - [CSMO logging solution for ICP Cloud Foundry](ICP-Logging-CloudFoundry)
 - [Further reading](#further-reading)
 
@@ -183,6 +184,53 @@ In the following example, the field **kubernetes.namespace** was used to render 
 [Import](https://www.elastic.co/guide/en/kibana/5.0/loading-a-saved-dashboard.html) attached Kibana [visualizations](Kibana-example-visualizations.json) and [dashboard](Kibana-example-dashboard.json) to learn how to build Kibana dashboards.
 
 ![](images/kibana-dashboard-example.png)
+
+# Collecting additional logs from worker nodes
+
+The example below shows how to configure collection of  `/var/log/syslog` log from ICP worker nodes running on Ubuntu into ICP ELK.
+
+Edit the filebeat configmap to add a new input_type:
+
+```
+kubectl edit cm logging-elk-filebeat-ds-config -n kube-system
+```
+
+Add another `input_type` entry like the following:
+
+```
+    - input_type: log
+      paths:
+        - /var/log/syslog
+      scan_frequency: 10s
+      fields_under_root: true
+      fields:
+        type: syslogs
+        node.hostname: ${NODE_HOSTNAME}
+```
+
+Edit filebeat daemonset to add `/var/log/syslog` as a volume:
+
+```
+kubectl edit ds logging-elk-filebeat-ds -n kube-system
+```
+
+add the following section in the `volumeMounts:`
+
+```
+   - mountPath: /var/log/syslog
+     name: syslog
+     readOnly: true
+```     
+and the following section in the `volumes:`
+
+```     
+   - hostPath:
+     path: /var/log/syslog
+     type: ""
+     name: syslog
+``` 
+
+After a couple of minutes verify in Kibana with search string: `type: syslogs`
 
 # Further Reading
 * [How to configure Kubernetes audit log in IBM Cloud Private](https://medium.com/@epatro/how-to-configure-kubernetes-audit-log-in-ibm-cloud-private-22d237ddc071)
