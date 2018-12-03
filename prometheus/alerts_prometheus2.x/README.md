@@ -69,6 +69,9 @@ data:
           alertname: ICPMonitoringHeartbeat
         repeat_interval: 5m
 ```
+More detailed article about integration of ICP Prometheus AlertManager with IBM Netcool Operations Insight, can be found [here](https://apps.na.collabserv.com/blogs/c83b42e5-2186-42f1-b498-2871621e2984/entry/ICP_Forwarding_alerts_from_Prometheus_Alertmanager_to_Omnibus?lang=en_us) (IBM Internal).
+
+[Here](https://apps.na.collabserv.com/blogs/c83b42e5-2186-42f1-b498-2871621e2984/entry/ICP_Deploy_NOI_in_30_minutes?lang=en_us) (IBM Internal) you can find instructions, how to deploy NOI in IBM Cloud Private.
 
 Use the following command to modify AlertManager ConfigMap in ICP:
 
