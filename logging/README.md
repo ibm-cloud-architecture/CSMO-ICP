@@ -235,6 +235,5 @@ After a couple of minutes verify in Kibana with search string: `type: syslogs`
 # Further Reading
 * [How to configure Kubernetes audit log in IBM Cloud Private](https://medium.com/@epatro/how-to-configure-kubernetes-audit-log-in-ibm-cloud-private-22d237ddc071)
 * [Processing Logs with IBM Cloud Private and Cloud Automation Manager](https://developer.ibm.com/cloudautomation/tutorials/processing-logs-cloud-automation-manager/)
-* [Forwarding logs from ICP ELK to Splunk]
-(https://apps.na.collabserv.com/blogs/c83b42e5-2186-42f1-b498-2871621e2984/entry/ICP_Forwarding_events_from_Logstash_to_Splunk?lang=en_us)  (IBM internal)
+* [Forwarding logs from ICP ELK to Splunk (IBM internal)](https://apps.na.collabserv.com/blogs/c83b42e5-2186-42f1-b498-2871621e2984/entry/ICP_Forwarding_events_from_Logstash_to_Splunk?lang=en_us)  
 
