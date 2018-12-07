@@ -11,6 +11,7 @@
 		- [Logstash configuration](#logstash-configuration)
 	- [Using Kibana for log search and visualization](#using-kibana-for-log-search-and-visualization)
 - [Collecting additional logs from worker nodes](#collecting-additional-logs-from-worker-nodes)
+- [Forwarding logs from ICP ELK to an external kafka server](#forwarding logs-from-ICP-ELK-to-an-external-kafka-server)
 - [CSMO logging solution for ICP Cloud Foundry](ICP-Logging-CloudFoundry)
 - [Further reading](#further-reading)
 
@@ -231,6 +232,26 @@ and the following section in the `volumes:`
 ``` 
 
 After a couple of minutes verify in Kibana with search string: `type: syslogs`
+
+
+# Forwarding logs from ICP ELK to an external Kafka server
+
+The following example shows how to configure ICP logstash to forward log stream to an external Kafka server. Apache Kafka is a popular open source messaging broker used frequently as a message queue for handling large volume of messages. 
+
+1. Create Kafka topic `icp-logstash`
+2. Edit the ICP logstash ConfigMap and add the following configuration to the `output` section.
+
+```
+      kafka {
+        codec => json {
+          charset => "UTF-8"
+        }
+        topic_id => 'icp-logstash'
+        bootstrap_servers => "kafka-host.local`:9092"
+      }
+``` 
+Make sure that FQDN of kafka server (`kafka-host.local` in the example above) can be resolved from within ICP logstash container. You can put  a comma separated list of kafka bootstrap servers in the `bootstrap_servers` parameter.
+
 
 # Further Reading
 * [How to configure Kubernetes audit log in IBM Cloud Private](https://medium.com/@epatro/how-to-configure-kubernetes-audit-log-in-ibm-cloud-private-22d237ddc071)
