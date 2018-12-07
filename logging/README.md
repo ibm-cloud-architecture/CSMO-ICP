@@ -11,7 +11,7 @@
 		- [Logstash configuration](#logstash-configuration)
 	- [Using Kibana for log search and visualization](#using-kibana-for-log-search-and-visualization)
 - [Collecting additional logs from worker nodes](#collecting-additional-logs-from-worker-nodes)
-- [Forwarding logs from ICP ELK to an external kafka server](#forwarding logs-from-ICP-ELK-to-an-external-kafka-server)
+- [Forwarding logs from ICP ELK to an external kafka server](#forwarding-logs-from-ICP-ELK-to-an-external-kafka-server)
 - [CSMO logging solution for ICP Cloud Foundry](ICP-Logging-CloudFoundry)
 - [Further reading](#further-reading)
 
