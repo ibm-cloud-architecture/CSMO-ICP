@@ -12,7 +12,7 @@ Click on the links below to see sample dashboard snaphots.
 - [Cluster (USE method)](https://snapshot.raintank.io/dashboard/snapshot/R0NT5SkyBe6loSw0E6PJF1qXDUyMENqv)
 - [Node (USE method)](https://snapshot.raintank.io/dashboard/snapshot/TOCfdyuxoQ8xp5V64v4HtKO8AM3ee1go)
 - [CoreDNS](https://snapshot.raintank.io/dashboard/snapshot/DE6vrvGli15zFkO3zuOOos0T0bYp6TrX)
-- [Deployment Volume](https://snapshot.raintank.io/dashboard/snapshot/dcQ5Fthczgwc3z4qqBVJFVCyIe0DAJUF)
+- [Deployment Volume](https://snapshot.raintank.io/dashboard/snapshot/6hnkOp1PyvEiZTV4pteU4GgGBeCb4LFn)
 
 ## Configuration
 
