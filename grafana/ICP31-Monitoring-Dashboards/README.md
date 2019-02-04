@@ -11,6 +11,8 @@ Click on the links below to see sample dashboard snaphots.
 - [StatefulSet](https://snapshot.raintank.io/dashboard/snapshot/4yvMJaqnLYKn1i3CV829r0PdhypeaaQL)
 - [Cluster (USE method)](https://snapshot.raintank.io/dashboard/snapshot/R0NT5SkyBe6loSw0E6PJF1qXDUyMENqv)
 - [Node (USE method)](https://snapshot.raintank.io/dashboard/snapshot/TOCfdyuxoQ8xp5V64v4HtKO8AM3ee1go)
+- [CoreDNS](https://snapshot.raintank.io/dashboard/snapshot/DE6vrvGli15zFkO3zuOOos0T0bYp6TrX)
+- [Deployment Volume](https://snapshot.raintank.io/dashboard/snapshot/dcQ5Fthczgwc3z4qqBVJFVCyIe0DAJUF)
 
 ## Configuration
 
@@ -33,3 +35,5 @@ After a couple of minutes, verify the new recording rules have been properly imp
 - [StatefulSet](ICP31-Grafana/K8s_Node.json)
 - [Cluster (USE Method)](ICP31-Grafana/K8s_USE_Method_Cluster.json)
 - [Node (USE Method)](ICP31-Grafana/K8s_USE_Method_Node.json)
+- [CoreDNS](ICP31-Grafana/K8s-CoreDNS.json)
+- [Deployment Volume](ICP31-Grafana/K8s-Deployments.json)
