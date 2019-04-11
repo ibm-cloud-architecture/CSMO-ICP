@@ -1,0 +1,20 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: etcd-high-fsync-durations
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPetcdHighFsyncDurations
+        rules:
+        - alert: ICPetcdHighFsyncDurations
+          annotations:
+            message: 'etcd cluster "{{ $labels.job }}": 99th percentile fync durations are
+              {{ $value }}s on etcd instance {{ $labels.instance }}.'
+          expr: |
+            histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket{job=~".*etcd.*"}[5m]))
+            > 0.5
+          for: 10m
+          labels:
+            severity: warning

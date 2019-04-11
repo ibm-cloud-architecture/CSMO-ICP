@@ -1,0 +1,19 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: etcd-no-leader
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPetcdNoLeader
+        rules:
+        - alert: ICPetcdNoLeader
+          annotations:
+            message: 'etcd cluster "{{ $labels.job }}": member {{ $labels.instance }} has
+              no leader.'
+          expr: |
+            etcd_server_has_leader{job=~".*etcd.*"} == 0
+          for: 1m
+          labels:
+            severity: critical

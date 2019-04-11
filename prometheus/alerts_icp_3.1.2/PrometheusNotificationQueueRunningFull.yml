@@ -1,0 +1,18 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: prometheus-notification-queue-full
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: PrometheusNotificationQueueRunningFull.rules
+        rules:
+          - alert: PrometheusNotificationQueueRunningFull
+            expr: predict_linear(prometheus_notifications_queue_length[5m], 60 * 30) > prometheus_notifications_queue_capacity
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              description: Prometheus alert notification queue is running full for {{$labels.namespace}}/{{$labels.pod}}
+              summary: Prometheus alert notification queue is running full

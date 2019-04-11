@@ -1,0 +1,20 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: predictive-host-disk-space
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPPreditciveHostDiskSpace
+        rules:
+          - alert: ICPPreditciveHostDiskSpace
+            expr: predict_linear(node_filesystem_free{mountpoint="/"}[4h], 4 * 3600) < 0
+            for: 30m
+            labels:
+              severity: warning
+            annotations:
+              description: 'Based on recent sampling, the disk is likely to will fill on volume
+                {{ $labels.mountpoint }} within the next 4 hours for instace: {{ $labels.instance_id
+                }} tagged as: {{ $labels.instance_name_tag }}'
+              summary: Predictive Disk Space Utilisation Alert

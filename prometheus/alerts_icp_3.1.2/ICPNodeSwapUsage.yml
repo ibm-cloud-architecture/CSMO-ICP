@@ -1,0 +1,20 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: node-swap-usage
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPNodeSwapUsage
+        rules:
+          - alert: ICPNodeSwapUsage
+            expr: (((node_memory_SwapTotal - node_memory_SwapFree) / node_memory_SwapTotal)
+              * 100) > 75
+            for: 2m
+            labels:
+              severity: warning
+            annotations:
+              description: '{{$labels.instance}}: Swap usage usage is above 75% (current value
+                is: {{ $value }})'
+              summary: '{{$labels.instance}}: Swap usage detected'

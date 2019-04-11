@@ -1,0 +1,19 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: kubelet-down
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPKubeletDown
+        rules:
+          - alert: ICPKubeletDown
+            expr: count(up{job="kubernetes-nodes"} == 0) / count(up{job="kubernetes-nodes"})
+              > 0.03
+            for: 1h
+            labels:
+              severity: warning
+            annotations:
+              description: Prometheus failed to scrape {{ $value }}% of kubelets.
+              summary: Many Kubelets cannot be scraped

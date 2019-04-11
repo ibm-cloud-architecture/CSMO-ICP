@@ -1,0 +1,20 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: host-cpu-utilization
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPHostCPUUtilisation
+        rules:
+          - alert: ICPHostCPUUtilisation
+            expr: 100 - (avg by(instance) (irate(node_cpu{mode="idle"}[5m])) * 100) > 70
+            for: 20m
+            labels:
+              severity: warning
+            annotations:
+              description: 'High CPU utilisation detected for instance {{ $labels.instance_id
+                }} tagged as: {{ $labels.instance_name_tag }}, the utilisation is currently:
+                {{ $value }}%'
+              summary: CPU Utilisation Alert

@@ -1,0 +1,19 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: node-memory-pressure
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPNodeMemoryPressure
+        rules:
+          - alert: ICPNodeMemoryPressure
+            expr: kube_node_status_condition{condition="MemoryPressure",status="true"} ==
+              1
+            labels:
+              service: ICP
+              severity: warning
+            annotations:
+              description: '{{ $labels.node }} is under memory pressure.'
+              summary: Node is under memory pressure.

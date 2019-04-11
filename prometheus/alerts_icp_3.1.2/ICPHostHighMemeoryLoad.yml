@@ -1,0 +1,19 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: host-high-memory-load
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPHostHighMemeoryLoad
+        rules:
+          - alert: ICPHostHighMemeoryLoad
+            expr: (sum(node_memory_MemTotal) - sum(node_memory_MemFree + node_memory_Buffers
+              + node_memory_Cached)) / sum(node_memory_MemTotal) * 100 > 85
+            labels:
+              severity: warning
+            annotations:
+              description: Memory of a host is almost full for instance {{ $labels.instance_id
+                }}
+              summary: Memory utilization Alert

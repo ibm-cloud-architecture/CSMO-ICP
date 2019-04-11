@@ -1,0 +1,19 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: pod-frequently-restarting
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPPodFrequentlyRestarting
+        rules:
+          - alert: ICPPodFrequentlyRestarting
+            expr: delta(kube_pod_container_status_restarts_total[1h]) > 2
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              description: Pod {{$labels.namespaces}}/{{$labels.pod}} was restarted {{$value}}
+                times within the last hour
+              summary: Pod is restarting frequently

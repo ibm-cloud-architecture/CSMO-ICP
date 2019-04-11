@@ -1,0 +1,19 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: etcd-high-number-of-failed-proposals
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPetcdHighNumberOfFailedProposals
+        rules:
+        - alert: ICPetcdHighNumberOfFailedProposals
+          annotations:
+            message: 'etcd cluster "{{ $labels.job }}": {{ $value }} proposal failures within
+              the last hour on etcd instance {{ $labels.instance }}.'
+          expr: |
+            rate(etcd_server_proposals_failed_total{job=~".*etcd.*"}[15m]) > 5
+          for: 15m
+          labels:
+            severity: warning

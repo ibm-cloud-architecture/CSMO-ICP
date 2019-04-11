@@ -1,0 +1,18 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: kubelet-too-many-pods
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPKubeletTooManyPods
+        rules:
+          - alert: ICPKubeletTooManyPods
+            expr: kubelet_running_pod_count > 110
+            labels:
+              severity: warning
+            annotations:
+              description: Kubelet {{$labels.instance}} is running {{$value}} pods, close
+                to the limit of 110
+              summary: Kubelet is close to pod limit

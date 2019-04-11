@@ -1,0 +1,18 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: monitoring-heartbeat
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPMonitoringHeartbeat
+        rules:
+          - alert: ICPMonitoringHeartbeat
+            expr: vector(1)
+            labels:
+              severity: none
+            annotations:
+              description: This is a Hearbeat event meant to ensure that the entire Alerting
+                pipeline is functional.
+              summary: Alerting Heartbeat

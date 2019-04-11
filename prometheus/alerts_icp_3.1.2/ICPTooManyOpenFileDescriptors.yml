@@ -1,0 +1,19 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: too-many-open-file-descriptors
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPTooManyOpenFileDescriptors
+        rules:
+          - alert: ICPTooManyOpenFileDescriptors
+            expr: 100 * (process_open_fds / process_max_fds) > 95
+            for: 10m
+            labels:
+              severity: critical
+            annotations:
+              description: '{{ $labels.job }}: {{ $labels.namespace }}/{{ $labels.pod }} ({{
+                $labels.instance }}) is using {{ $value }}% of the available file/socket descriptors.'
+              summary: Too many open file descriptors for the monitoring target

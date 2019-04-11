@@ -1,0 +1,19 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: etcd-high-number-of-leader-changes
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPetcdHighNumberOfLeaderChanges
+        rules:
+        - alert: ICPetcdHighNumberOfLeaderChanges
+          annotations:
+            message: 'etcd cluster "{{ $labels.job }}": instance {{ $labels.instance }}
+              has seen {{ $value }} leader changes within the last hour.'
+          expr: |
+            rate(etcd_server_leader_changes_seen_total{job=~".*etcd.*"}[15m]) > 3
+          for: 15m
+          labels:
+            severity: warning

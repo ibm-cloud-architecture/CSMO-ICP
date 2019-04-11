@@ -1,0 +1,18 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: node-out-of-disk
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPNodeOutOfDisk
+        rules:
+          - alert: ICPNodeOutOfDisk
+            expr: kube_node_status_condition{condition="OutOfDisk",status="true"} == 1
+            labels:
+              service: ICP
+              severity: critical
+            annotations:
+              description: '{{ $labels.node }} has run out of disk space.'
+              summary: Node ran out of disk space.

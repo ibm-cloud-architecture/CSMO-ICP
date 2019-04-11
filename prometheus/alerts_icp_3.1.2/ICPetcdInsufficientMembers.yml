@@ -1,0 +1,19 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: etcd-insufficient-members
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPetcdInsufficientMembers
+        rules:
+        - alert: ICPetcdInsufficientMembers
+          annotations:
+            message: 'etcd cluster "{{ $labels.job }}": insufficient members ({{ $value
+              }}).'
+          expr: |
+            sum(up{job=~".*etcd.*"} == bool 1) by (job) < ((count(up{job=~".*etcd.*"}) by (job) + 1) / 2)
+          for: 3m
+          labels:
+            severity: critical

@@ -1,0 +1,21 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: many-nodes-not-ready
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPManyNodesNotReady
+        rules:
+          - alert: ICPManyNodesNotReady
+            expr: count(kube_node_status_condition{condition="Ready",status="true"} == 0)
+              > 1 and (count(kube_node_status_condition{condition="Ready",status="true"} ==
+              0) / count(kube_node_status_condition{condition="Ready",status="true"})) > 0.2
+            for: 1m
+            labels:
+              severity: critical
+            annotations:
+              description: '{{ $value }} Kubernetes nodes (more than 10% are in the NotReady
+                state).'
+              summary: Many Kubernetes nodes are Not Ready

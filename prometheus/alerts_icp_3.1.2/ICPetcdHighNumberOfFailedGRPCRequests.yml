@@ -1,0 +1,22 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: etcd-high-number-of-failed-grpc-requests
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPetcdHighNumberOfFailedGRPCRequests
+        rules:
+        - alert: ICPetcdHighNumberOfFailedGRPCRequests
+          annotations:
+            message: 'etcd cluster "{{ $labels.job }}": {{ $value }}% of requests for {{
+              $labels.grpc_method }} failed on etcd instance {{ $labels.instance }}.'
+          expr: |
+            100 * sum(rate(grpc_server_handled_total{job=~".*etcd.*", grpc_code!="OK"}[5m])) BY (job, instance, grpc_service, grpc_method)
+              /
+            sum(rate(grpc_server_handled_total{job=~".*etcd.*"}[5m])) BY (job, instance, grpc_service, grpc_method)
+              > 1
+          for: 10m
+          labels:
+            severity: warning

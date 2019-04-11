@@ -1,0 +1,20 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: api-server-latency
+spec:
+  enabled: true
+  data: |-
+    groups:
+      - name: ICPApiServerLatency
+        rules:
+          - alert: ICPApiServerLatency
+            expr: histogram_quantile(0.99, sum without(instance, resource) (apiserver_request_latencies_bucket{verb!~"CONNECT|WATCHLIST|WATCH|PROXY"}))
+                  / 1e+06 > 1
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              description: 99th percentile Latency for {{ $labels.verb }} requests to the
+                kube-apiserver is higher than 1s.
+              summary: Kubernetes apiserver latency is high
