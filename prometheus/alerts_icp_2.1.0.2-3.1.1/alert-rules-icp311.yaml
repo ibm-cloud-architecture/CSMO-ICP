@@ -1,0 +1,343 @@
+apiVersion: v1
+data:
+  icp_base_rules.yml: |
+    groups:
+    - name: etcd
+      rules:
+      - alert: ICPetcdInsufficientMembers
+        annotations:
+          message: 'etcd cluster "{{ $labels.job }}": insufficient members ({{ $value
+            }}).'
+        expr: |
+          sum(up{job=~".*etcd.*"} == bool 1) by (job) < ((count(up{job=~".*etcd.*"}) by (job) + 1) / 2)
+        for: 3m
+        labels:
+          severity: critical
+      - alert: ICPetcdNoLeader
+        annotations:
+          message: 'etcd cluster "{{ $labels.job }}": member {{ $labels.instance }} has
+            no leader.'
+        expr: |
+          etcd_server_has_leader{job=~".*etcd.*"} == 0
+        for: 1m
+        labels:
+          severity: critical
+      - alert: ICPetcdHighNumberOfLeaderChanges
+        annotations:
+          message: 'etcd cluster "{{ $labels.job }}": instance {{ $labels.instance }}
+            has seen {{ $value }} leader changes within the last hour.'
+        expr: |
+          rate(etcd_server_leader_changes_seen_total{job=~".*etcd.*"}[15m]) > 3
+        for: 15m
+        labels:
+          severity: warning
+      - alert: ICPetcdHighNumberOfFailedGRPCRequests
+        annotations:
+          message: 'etcd cluster "{{ $labels.job }}": {{ $value }}% of requests for {{
+            $labels.grpc_method }} failed on etcd instance {{ $labels.instance }}.'
+        expr: |
+          100 * sum(rate(grpc_server_handled_total{job=~".*etcd.*", grpc_code!="OK"}[5m])) BY (job, instance, grpc_service, grpc_method)
+            /
+          sum(rate(grpc_server_handled_total{job=~".*etcd.*"}[5m])) BY (job, instance, grpc_service, grpc_method)
+            > 1
+        for: 10m
+        labels:
+          severity: warning
+      - alert: ICPetcdHighNumberOfFailedGRPCRequests
+        annotations:
+          message: 'etcd cluster "{{ $labels.job }}": {{ $value }}% of requests for {{
+            $labels.grpc_method }} failed on etcd instance {{ $labels.instance }}.'
+        expr: |
+          100 * sum(rate(grpc_server_handled_total{job=~".*etcd.*", grpc_code!="OK"}[5m])) BY (job, instance, grpc_service, grpc_method)
+            /
+          sum(rate(grpc_server_handled_total{job=~".*etcd.*"}[5m])) BY (job, instance, grpc_service, grpc_method)
+            > 5
+        for: 5m
+        labels:
+          severity: critical
+      - alert: ICPetcdHighNumberOfFailedProposals
+        annotations:
+          message: 'etcd cluster "{{ $labels.job }}": {{ $value }} proposal failures within
+            the last hour on etcd instance {{ $labels.instance }}.'
+        expr: |
+          rate(etcd_server_proposals_failed_total{job=~".*etcd.*"}[15m]) > 5
+        for: 15m
+        labels:
+          severity: warning
+      - alert: ICPetcdHighFsyncDurations
+        annotations:
+          message: 'etcd cluster "{{ $labels.job }}": 99th percentile fync durations are
+            {{ $value }}s on etcd instance {{ $labels.instance }}.'
+        expr: |
+          histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket{job=~".*etcd.*"}[5m]))
+          > 0.5
+        for: 10m
+        labels:
+          severity: warning
+      - alert: ICPetcdHighCommitDurations
+        annotations:
+          message: 'etcd cluster "{{ $labels.job }}": 99th percentile commit durations
+            {{ $value }}s on etcd instance {{ $labels.instance }}.'
+        expr: |
+          histogram_quantile(0.99, rate(etcd_disk_backend_commit_duration_seconds_bucket{job=~".*etcd.*"}[5m]))
+          > 0.25
+        for: 10m
+        labels:
+          severity: warning
+    - name: node.rules
+      rules:
+      - alert: ICPNodeExporterDown
+        expr: absent(up{component="nodeexporter"} == 1)
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: Prometheus could not scrape a node-exporter for more than 10m,
+            or node-exporters have disappeared from discovery.
+          summary: node-exporter cannot be scraped
+      - alert: ICPNodeOutOfDisk
+        expr: kube_node_status_condition{condition="OutOfDisk",status="true"} == 1
+        labels:
+          service: ICP
+          severity: critical
+        annotations:
+          description: '{{ $labels.node }} has run out of disk space.'
+          summary: Node ran out of disk space.
+      - alert: ICPNodeMemoryPressure
+        expr: kube_node_status_condition{condition="MemoryPressure",status="true"} ==
+          1
+        labels:
+          service: ICP
+          severity: warning
+        annotations:
+          description: '{{ $labels.node }} is under memory pressure.'
+          summary: Node is under memory pressure.
+      - alert: ICPNodeDiskPressure
+        expr: kube_node_status_condition{condition="DiskPressure",status="true"} == 1
+        labels:
+          service: ICP
+          severity: warning
+        annotations:
+          description: '{{ $labels.node }} is under disk pressure.'
+          summary: Node is under disk pressure.
+      - alert: ICPHostCPUUtilisation
+        expr: 100 - (avg by(instance) (irate(node_cpu{mode="idle"}[5m])) * 100) > 70
+        for: 20m
+        labels:
+          severity: warning
+        annotations:
+          description: 'High CPU utilisation detected for instance {{ $labels.instance_id
+            }} tagged as: {{ $labels.instance_name_tag }}, the utilisation is currently:
+            {{ $value }}%'
+          summary: CPU Utilisation Alert
+      - alert: ICPPreditciveHostDiskSpace
+        expr: predict_linear(node_filesystem_free{mountpoint="/"}[4h], 4 * 3600) < 0
+        for: 30m
+        labels:
+          severity: warning
+        annotations:
+          description: 'Based on recent sampling, the disk is likely to will fill on volume
+            {{ $labels.mountpoint }} within the next 4 hours for instace: {{ $labels.instance_id
+            }} tagged as: {{ $labels.instance_name_tag }}'
+          summary: Predictive Disk Space Utilisation Alert
+      - alert: ICPHostHighMemeoryLoad
+        expr: (sum(node_memory_MemTotal) - sum(node_memory_MemFree + node_memory_Buffers
+          + node_memory_Cached)) / sum(node_memory_MemTotal) * 100 > 85
+        labels:
+          severity: warning
+        annotations:
+          description: Memory of a host is almost full for instance {{ $labels.instance_id
+            }}
+          summary: Memory utilization Alert
+      - alert: ICPNodeSwapUsage
+        expr: (((node_memory_SwapTotal - node_memory_SwapFree) / node_memory_SwapTotal)
+          * 100) > 75
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          description: '{{$labels.instance}}: Swap usage usage is above 75% (current value
+            is: {{ $value }})'
+          summary: '{{$labels.instance}}: Swap usage detected'
+    - name: prometheus.rules
+      rules:
+      - alert: PrometheusConfigReloadFailed
+        expr: prometheus_config_last_reload_successful == 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: Reloading Prometheus configuration has failed for {{ $labels.namespace
+            }}/{{ $labels.pod}}.
+          summary: Prometheus configuration reload has failed
+      - alert: PrometheusNotificationQueueRunningFull
+        expr: predict_linear(prometheus_notifications_queue_length[5m], 60 * 30) > prometheus_notifications_queue_capacity
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: Prometheus alert notification queue is running full for {{$labels.namespace}}/{{$labels.pod}}
+          summary: Prometheus alert notification queue is running full
+      - alert: PrometheusErrorSendingAlerts
+        expr: rate(prometheus_notifications_errors_total[5m]) / rate(prometheus_notifications_sent_total[5m])
+          > 0.01
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: Errors while sending alerts from Prometheus {{$labels.namespace}}/{{$labels.pod}}
+            to Alertmanager {{$labels.Alertmanager}}
+          summary: Errors while sending alert from Prometheus
+      - alert: PrometheusErrorSendingAlerts
+        expr: rate(prometheus_notifications_errors_total[5m]) / rate(prometheus_notifications_sent_total[5m])
+          > 0.03
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          description: Errors while sending alerts from Prometheus {{$labels.namespace}}/{{$labels.pod}}
+            to Alertmanager {{$labels.Alertmanager}}
+          summary: Errors while sending alert from Prometheus
+      - alert: PrometheusNotConnectedToAlertmanagers
+        expr: prometheus_notifications_alertmanagers_discovered < 1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: Prometheus {{ $labels.namespace }}/{{ $labels.pod}} is not connected
+            to any Alertmanagers
+          summary: Prometheus is not connected to any Alertmanagers
+    - name: kubelet.rules
+      rules:
+      - alert: ICPNodeNotReady
+        expr: kube_node_status_condition{condition="Ready",status="true"} == 0
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          description: The Kubelet on {{ $labels.node }} has not checked in with the API,
+            or has set itself to NotReady, for more than an hour
+          summary: Node status is NotReady
+      - alert: ICPManyNodesNotReady
+        expr: count(kube_node_status_condition{condition="Ready",status="true"} == 0)
+          > 1 and (count(kube_node_status_condition{condition="Ready",status="true"} ==
+          0) / count(kube_node_status_condition{condition="Ready",status="true"})) > 0.2
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          description: '{{ $value }} Kubernetes nodes (more than 10% are in the NotReady
+            state).'
+          summary: Many Kubernetes nodes are Not Ready
+      - alert: ICPKubeletDown
+        expr: count(up{job="kubernetes-nodes"} == 0) / count(up{job="kubernetes-nodes"})
+          > 0.03
+        for: 1h
+        labels:
+          severity: warning
+        annotations:
+          description: Prometheus failed to scrape {{ $value }}% of kubelets.
+          summary: Many Kubelets cannot be scraped
+      - alert: ICPKubeletDown
+        expr: absent(up{job="kubernetes-nodes"} == 1) or count(up{job="kubernetes-nodes"}
+          == 0) / count(up{job="kubernetes-nodes"}) > 0.1
+        for: 1h
+        labels:
+          severity: critical
+        annotations:
+          description: Prometheus failed to scrape {{ $value }}% of kubelets, or all Kubelets
+            have disappeared from service discovery.
+          summary: Many Kubelets cannot be scraped
+      - alert: ICPKubeletTooManyPods
+        expr: kubelet_running_pod_count > 110
+        labels:
+          severity: warning
+        annotations:
+          description: Kubelet {{$labels.instance}} is running {{$value}} pods, close
+            to the limit of 110
+          summary: Kubelet is close to pod limit
+    - name: kube-apiserver.rules
+      rules:
+      - alert: ICPApiserverDown
+        expr: absent(up{job="kubernetes-apiservers"} == 1)
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          description: Prometheus failed to scrape API server(s), or all API servers have
+            disappeared from service discovery.
+          summary: API server unreachable
+      - alert: ICPApiServerLatency
+        expr: histogram_quantile(0.99, sum without(instance, resource) (apiserver_request_latencies_bucket{verb!~"CONNECT|WATCHLIST|WATCH|PROXY"}))
+          / 1e+06 > 1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: 99th percentile Latency for {{ $labels.verb }} requests to the
+            kube-apiserver is higher than 1s.
+          summary: Kubernetes apiserver latency is high
+    - name: general.rules
+      rules:
+      - alert: ICPMonitoringTargetDown
+        expr: 100 * (count by(job) (up == 0) / count by(job) (up)) > 10
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: '{{ $value }}% or more of {{ $labels.job }} targets are down.'
+          summary: Targets are down
+      - alert: ICPMonitoringHeartbeat
+        expr: vector(1)
+        labels:
+          severity: none
+        annotations:
+          description: This is a Hearbeat event meant to ensure that the entire Alerting
+            pipeline is functional.
+          summary: Alerting Heartbeat
+      - alert: ICPTooManyOpenFileDescriptors
+        expr: 100 * (process_open_fds / process_max_fds) > 95
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          description: '{{ $labels.job }}: {{ $labels.namespace }}/{{ $labels.pod }} ({{
+            $labels.instance }}) is using {{ $value }}% of the available file/socket descriptors.'
+          summary: Too many open file descriptors for the monitoring target
+      - record: instance:fd_utilization
+        expr: process_open_fds / process_max_fds
+      - alert: ICPFdExhaustionClose
+        expr: predict_linear(instance:fd_utilization[1h], 3600 * 4) > 1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: '{{ $labels.job }}: {{ $labels.namespace }}/{{ $labels.pod }} ({{
+            $labels.instance }}) instance will exhaust in file/socket descriptors soon'
+          summary: File descriptors soon exhausted for the monitoring target
+      - alert: ICPFdExhaustionClose
+        expr: predict_linear(instance:fd_utilization[10m], 3600) > 1
+        for: 10m
+        labels:
+          severity: critical
+        annotations:
+          description: '{{ $labels.job }}: {{ $labels.namespace }}/{{ $labels.pod }} ({{
+            $labels.instance }}) instance will exhaust in file/socket descriptors soon'
+          summary: File descriptors soon exhausted for the monitoring target
+      - alert: ICPPodFrequentlyRestarting
+        expr: delta(kube_pod_container_status_restarts_total[1h]) > 2
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          description: Pod {{$labels.namespaces}}/{{$labels.pod}} was restarted {{$value}}
+            times within the last hour
+          summary: Pod is restarting frequently
+kind: ConfigMap
+metadata:
+  labels:
+    app: monitoring-prometheus
+    component: prometheus
+  name: monitoring-prometheus-alertrules
+  namespace: kube-system
+  selfLink: /api/v1/namespaces/kube-system/configmaps/monitoring-prometheus-alertrules
