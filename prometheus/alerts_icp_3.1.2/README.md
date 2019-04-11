@@ -1,39 +1,64 @@
-# Base set of alerts for ICP 2.1.0.2 - 3.1.1
+# Base set of alerts for ICP 3.1.2
 
-Alerts are defined in Prometheus 2.x format (IBM Cloud Private 2.1.0.2 or later). Most of the rules are based on the [Prometheus Operator](https://github.com/coreos/prometheus-operator) rules modified to work with IBM Cloud Private.
+Most of the rules are based on the [Prometheus Operator](https://github.com/coreos/prometheus-operator) rules modified to work with IBM Cloud Private and recommendations from [etcd.io](https://github.com/etcd-io). 
 
-Use the following command to replace existing alert definitions in Prometheus with provided alert rules:
-
-- ICP 2.1.0.2
+Use the following commands to deploy the provided alert rules on ICP 3.1.2:
 
 ```
-kubectl replace -f alert-rules2102.yaml  
+wget https://github.com/ibm-cloud-architecture/CSMO-ICP/raw/master/prometheus/alerts_icp_3.1.2/alerts312.tar.gz
+tar xvfz alerts312.tar.gz
+cd alerts312
+for i in *.yml;do kubectl apply -f $i;done
 ```
 
-- ICP 2.1.0.3 - 3.1.0
+Verify the alert rules were successfully imported:
 
 ```
-kubectl replace -f alert-rules2103.yaml  
+$ kc get alertrules
+NAME                                        AGE
+api-server-down                             1h
+api-server-latency                          23h
+controller-manager-down                     1h
+elasticsearch-cluster-health                32d
+etcd-high-commit-durations                  1h
+etcd-high-fsync-durations                   1h
+etcd-high-number-of-failed-grpc-requests    1h
+etcd-high-number-of-failed-proposals        1h
+etcd-high-number-of-leader-changes          1h
+etcd-insufficient-members                   1h
+etcd-no-leader                              1h
+failed-jobs                                 32d
+high-cpu-usage                              32d
+host-cpu-utilization                        1h
+host-high-memory-load                       1h
+kubelet-down                                1h
+kubelet-too-many-pods                       1h
+many-nodes-not-ready                        1h
+monitoring-heartbeat                        1h
+monitoring-target-down                      1h
+node-disk-pressure                          1h
+node-exporter-down                          1h
+node-memory-pressure                        1h
+node-memory-usage                           32d
+node-not-ready                              1h
+node-out-of-disk                            1h
+node-swap-usage                             1h
+pod-frequently-restarting                   1h
+pods-restarting                             32d
+pods-terminated                             32d
+predictive-host-disk-space                  1h
+prometheus-config-reload-failed             1h
+prometheus-error-sending-alerts             1h
+prometheus-not-connected-to-alertmanagers   1h
+prometheus-notification-queue-full          1h
+too-many-open-file-descriptors              1h
 ```
-- ICP 3.1.1 (includes additional set of alert rules for **etcd** based on recommendations from [etcd.io](https://github.com/etcd-io))
+
+The alert rules can be edited using:
 
 ```
-kubectl replace -f alert-rules-icp311.yaml  
+kubectl edit alertrules/<rule_name>
 ```
-
-In order to add selected alert rules to existing configuration, edit alerting ConfigMap in `kube-system` namespace and copy selected rules into `data:` section.
-
-- ICP 2.1.0.2
-
-```
-kubectl edit cm alert-rules -n kube-system
-```
-- ICP 2.1.0.3 - 3.1.1
-
-```
-kubectl edit cm monitoring-prometheus-alertrules -n kube-system
-```
-
 
 Example alert rule:
 
@@ -86,7 +111,6 @@ kubectl edit cm monitoring-prometheus-alertmanager -n kube-system
 ```
 
 The table below lists proposed base set of alerts:
-
 
 | Alert Name | Severity | Summary | Message | Action |
 |-----------------------------------------|----------|-----------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
