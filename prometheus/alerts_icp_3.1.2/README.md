@@ -14,7 +14,7 @@ for i in *.yml;do kubectl apply -f $i;done
 Verify the alert rules were successfully imported:
 
 ```
-$ kc get alertrules
+$ kubectl get alertrules
 NAME                                        AGE
 api-server-down                             1h
 api-server-latency                          23h
