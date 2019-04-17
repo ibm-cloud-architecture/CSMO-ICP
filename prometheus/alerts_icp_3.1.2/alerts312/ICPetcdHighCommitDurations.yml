@@ -12,6 +12,8 @@ spec:
           annotations:
             message: 'etcd cluster "{{ $labels.job }}": 99th percentile commit durations
               {{ $value }}s on etcd instance {{ $labels.instance }}.'
+            type: Etcd
+            summary: Etcd high commit durations.
           expr: |
             histogram_quantile(0.99, rate(etcd_disk_backend_commit_duration_seconds_bucket{job=~".*etcd.*"}[5m]))
             > 0.25

@@ -12,6 +12,8 @@ spec:
           annotations:
             message: 'etcd cluster "{{ $labels.job }}": insufficient members ({{ $value
               }}).'
+            type: Etcd
+            summary: Etcd has insufficient number of cluster members.
           expr: |
             sum(up{job=~".*etcd.*"} == bool 1) by (job) < ((count(up{job=~".*etcd.*"}) by (job) + 1) / 2)
           for: 3m

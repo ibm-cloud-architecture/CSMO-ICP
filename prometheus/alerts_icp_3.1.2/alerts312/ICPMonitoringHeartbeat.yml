@@ -16,3 +16,4 @@ spec:
               description: This is a Hearbeat event meant to ensure that the entire Alerting
                 pipeline is functional.
               summary: Alerting Heartbeat
+              type: Heartbeat

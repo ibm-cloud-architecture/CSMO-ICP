@@ -17,3 +17,4 @@ spec:
             annotations:
               description: '{{ $labels.node }} is under memory pressure.'
               summary: Node is under memory pressure.
+              type: Server

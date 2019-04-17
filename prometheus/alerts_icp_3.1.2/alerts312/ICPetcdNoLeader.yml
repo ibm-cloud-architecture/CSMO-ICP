@@ -12,6 +12,8 @@ spec:
           annotations:
             message: 'etcd cluster "{{ $labels.job }}": member {{ $labels.instance }} has
               no leader.'
+            type: Etcd
+            summary: Etcd cluster has no leader.
           expr: |
             etcd_server_has_leader{job=~".*etcd.*"} == 0
           for: 1m

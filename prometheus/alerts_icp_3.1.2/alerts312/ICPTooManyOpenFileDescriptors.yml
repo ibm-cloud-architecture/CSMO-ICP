@@ -17,3 +17,4 @@ spec:
               description: '{{ $labels.job }}: {{ $labels.namespace }}/{{ $labels.pod }} ({{
                 $labels.instance }}) is using {{ $value }}% of the available file/socket descriptors.'
               summary: Too many open file descriptors for the monitoring target
+              type: Pod

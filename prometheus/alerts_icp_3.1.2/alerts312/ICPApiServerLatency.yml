@@ -17,4 +17,5 @@ spec:
             annotations:
               description: 99th percentile Latency for {{ $labels.verb }} requests to the
                 kube-apiserver is higher than 1s.
-              summary: Kubernetes apiserver latency is high
+              summary: Kubernetes apiserver latency is high.
+              type: APIServer

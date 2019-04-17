@@ -17,3 +17,4 @@ spec:
               description: Reloading Prometheus configuration has failed for {{ $labels.namespace
                 }}/{{ $labels.pod}}.
               summary: Prometheus configuration reload has failed
+              type: Prometheus

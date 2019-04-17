@@ -17,3 +17,4 @@ spec:
               description: Prometheus could not scrape a node-exporter for more than 10m,
                 or node-exporters have disappeared from discovery.
               summary: node-exporter cannot be scraped
+              type: MonitoringTarget

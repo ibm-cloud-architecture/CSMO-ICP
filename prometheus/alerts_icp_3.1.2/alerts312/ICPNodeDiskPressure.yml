@@ -16,3 +16,4 @@ spec:
             annotations:
               description: '{{ $labels.node }} is under disk pressure.'
               summary: Node is under disk pressure.
+              type: Server

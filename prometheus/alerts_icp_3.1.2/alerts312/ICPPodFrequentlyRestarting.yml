@@ -17,3 +17,4 @@ spec:
               description: Pod {{$labels.namespaces}}/{{$labels.pod}} was restarted {{$value}}
                 times within the last hour
               summary: Pod is restarting frequently
+              type: Pod

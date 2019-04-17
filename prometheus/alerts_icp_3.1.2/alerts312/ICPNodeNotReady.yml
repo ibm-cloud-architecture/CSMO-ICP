@@ -17,3 +17,4 @@ spec:
               description: The Kubelet on {{ $labels.node }} has not checked in with the API,
                 or has set itself to NotReady, for more than an hour
               summary: Node status is NotReady
+              type: Kubelet

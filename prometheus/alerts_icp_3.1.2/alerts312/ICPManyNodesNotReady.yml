@@ -19,3 +19,4 @@ spec:
               description: '{{ $value }} Kubernetes nodes (more than 10% are in the NotReady
                 state).'
               summary: Many Kubernetes nodes are Not Ready
+              type: Kubelet

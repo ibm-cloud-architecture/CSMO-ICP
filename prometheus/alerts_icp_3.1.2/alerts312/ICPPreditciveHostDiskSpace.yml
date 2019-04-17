@@ -18,3 +18,4 @@ spec:
                 {{ $labels.mountpoint }} within the next 4 hours for instace: {{ $labels.instance_id
                 }} tagged as: {{ $labels.instance_name_tag }}'
               summary: Predictive Disk Space Utilisation Alert
+              type: Server

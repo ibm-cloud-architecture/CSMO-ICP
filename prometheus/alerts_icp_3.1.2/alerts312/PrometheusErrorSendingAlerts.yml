@@ -18,3 +18,4 @@ spec:
               description: Errors while sending alerts from Prometheus {{$labels.namespace}}/{{$labels.pod}}
                 to Alertmanager {{$labels.Alertmanager}}
               summary: Errors while sending alert from Prometheus
+              type: Prometheus

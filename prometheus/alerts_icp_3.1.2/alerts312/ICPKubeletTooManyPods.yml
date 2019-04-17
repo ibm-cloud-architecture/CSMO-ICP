@@ -16,3 +16,4 @@ spec:
               description: Kubelet {{$labels.instance}} is running {{$value}} pods, close
                 to the limit of 110
               summary: Kubelet is close to pod limit
+              type: Kubelet

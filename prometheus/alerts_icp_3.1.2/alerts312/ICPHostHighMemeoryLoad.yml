@@ -17,3 +17,4 @@ spec:
               description: Memory of a host is almost full for instance {{ $labels.instance_id
                 }}
               summary: Memory utilization Alert
+              type: Server

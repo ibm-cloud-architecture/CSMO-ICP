@@ -16,3 +16,4 @@ spec:
             annotations:
               description: '{{ $labels.node }} has run out of disk space.'
               summary: Node ran out of disk space.
+              type: Server

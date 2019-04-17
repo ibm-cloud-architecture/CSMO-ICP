@@ -18,3 +18,4 @@ spec:
                 }} tagged as: {{ $labels.instance_name_tag }}, the utilisation is currently:
                 {{ $value }}%'
               summary: CPU Utilisation Alert
+              type: Server

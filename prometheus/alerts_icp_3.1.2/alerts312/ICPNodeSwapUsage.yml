@@ -18,3 +18,4 @@ spec:
               description: '{{$labels.instance}}: Swap usage usage is above 75% (current value
                 is: {{ $value }})'
               summary: '{{$labels.instance}}: Swap usage detected'
+              type: Server

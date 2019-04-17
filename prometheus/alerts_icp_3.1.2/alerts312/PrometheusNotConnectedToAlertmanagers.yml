@@ -17,3 +17,4 @@ spec:
               description: Prometheus {{ $labels.namespace }}/{{ $labels.pod}} is not connected
                 to any Alertmanagers
               summary: Prometheus is not connected to any Alertmanagers
+              type: Prometheus

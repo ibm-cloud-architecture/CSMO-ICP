@@ -12,6 +12,8 @@ spec:
           annotations:
             message: 'etcd cluster "{{ $labels.job }}": instance {{ $labels.instance }}
               has seen {{ $value }} leader changes within the last hour.'
+            type: Etcd
+            summary: Etcd high number of leader changes in the last hour.
           expr: |
             rate(etcd_server_leader_changes_seen_total{job=~".*etcd.*"}[15m]) > 3
           for: 15m

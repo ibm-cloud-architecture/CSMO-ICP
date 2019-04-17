@@ -12,6 +12,8 @@ spec:
           annotations:
             message: 'etcd cluster "{{ $labels.job }}": {{ $value }} proposal failures within
               the last hour on etcd instance {{ $labels.instance }}.'
+            type: Etcd
+            summary: Etcd high number of failed proposals.
           expr: |
             rate(etcd_server_proposals_failed_total{job=~".*etcd.*"}[15m]) > 5
           for: 15m

@@ -16,3 +16,4 @@ spec:
             annotations:
               description: '{{ $value }}% or more of {{ $labels.job }} targets are down.'
               summary: Targets are down
+              type: MonitoringTarget

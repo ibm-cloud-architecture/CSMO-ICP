@@ -17,3 +17,4 @@ spec:
             annotations:
               description: Prometheus failed to scrape {{ $value }}% of kubelets.
               summary: Many Kubelets cannot be scraped
+              type: Kubelet
