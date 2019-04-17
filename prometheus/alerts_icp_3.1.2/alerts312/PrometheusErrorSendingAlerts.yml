@@ -9,7 +9,7 @@ spec:
       - name: PrometheusErrorSendingAlerts.rules
         rules:
           - alert: PrometheusErrorSendingAlerts
-           expr: rate(prometheus_notifications_errors_total[5m]) / rate(prometheus_notifications_sent_total[5m])
+            expr: rate(prometheus_notifications_errors_total[5m]) / rate(prometheus_notifications_sent_total[5m])
               > 0.01
             for: 10m
             labels:
