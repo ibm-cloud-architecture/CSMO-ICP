@@ -22,7 +22,6 @@ controller-manager-down                     1h
 elasticsearch-cluster-health                32d
 etcd-high-commit-durations                  1h
 etcd-high-fsync-durations                   1h
-etcd-high-number-of-failed-grpc-requests    1h
 etcd-high-number-of-failed-proposals        1h
 etcd-high-number-of-leader-changes          1h
 etcd-insufficient-members                   1h
@@ -141,8 +140,6 @@ The table below lists proposed base set of alerts:
 | ICPetcdInsufficientMembers | critical | etcd cluster insufficient members | If one more etcd member goes down the cluster will be unavailable | Applicable only for etcd clusters. Alert is raised if another failed member of the etcd cluster will result in an unavailable etcd cluster. |
 | ICPetcdNoLeader | critical | etcd member has no leader | etcd member {{ $labels.instance }} has no leader | Applicable only for etcd clusters |
 | ICPetcdHighNumberOfLeaderChanges | warning | a high number of leader changes within the etcd cluster are happening | etcd instance {{ $labels.instance }} has seen {{ $value }} leader changes within the last hour | Applicable only for etcd clusters. The alert is fired if there are lots of leader changes |
-| ICPetcdHighNumberOfFailedGRPCRequests | warning | a high number of gRPC requests are failing | {{ $value }}% of requests for {{ $labels.grpc_method }} failed on etcd instance {{ $labels.instance }} | Alert if more than 1% of gRPC method calls for etcd have failed within the last 5 minutes. Check etcd logs. |
-| ICPetcdHighNumberOfFailedGRPCRequests | critical | a high number of gRPC requests are failing | {{ $value }}% of requests for {{ $labels.grpc_method }} failed on etcd instance {{ $labels.instance }} | Alert if more than 5% of gRPC method calls for etcd have failed within the last 5 minutes. Check etcd logs |
 | ICPetcdHighNumberOfFailedProposals | warning | a high number of proposals within the etcd cluster are failing | etcd instance {{ $labels.instance }} has seen {{ $value }} proposal failures within the last hour | Writes and configuration changes sent to etcd are called proposals. The raft protocol ensures that the proposals are applied correctly to the cluster. Rate of failed proposals should be low. Check etcd logs. |
 | ICPetcdHighFsyncDurations | warning | high fsync durations | etcd instance {{ $labels.instance }} fync durations are high | Disk performance is the major driver for etcd server performance as proposals must be written to disk  and fsync’ed, before followers can acknowledge a proposal from the leader. Slow storage may highly degrade etcd performance. |
 | ICPetcdHighCommitDurations | warning | high commit durations | etcd instance {{ $labels.instance }} commit durations are high | Disk performance is the major driver for etcd server performance as proposals must be written to disk  and fsync’ed, before followers can acknowledge a proposal from the leader. Slow storage may highly degrade etcd performance. |
