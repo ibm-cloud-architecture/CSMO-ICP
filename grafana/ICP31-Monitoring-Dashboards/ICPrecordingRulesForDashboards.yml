@@ -1,0 +1,217 @@
+apiVersion: monitoringcontroller.cloud.ibm.com/v1
+kind: AlertRule
+metadata:
+  name: recording-rules-for-dashboards
+spec:
+  enabled: true
+  data: |-
+    "groups": 
+    - "name": "k8s.rules"
+      "rules": 
+      - "expr": |
+          sum(rate(container_cpu_usage_seconds_total{job="kubernetes-cadvisor", image!="", container_name!=""}[5m])) by (kubernetes_namespace)
+        "record": "kubernetes_namespace:container_cpu_usage_seconds_total:sum_rate"
+      - "expr": |
+          sum by (kubernetes_namespace, pod_name, container_name) (
+            rate(container_cpu_usage_seconds_total{job="kubernetes-cadvisor", image!="", container_name!=""}[5m])
+          )
+        "record": "kubernetes_namespace_pod_name_container_name:container_cpu_usage_seconds_total:sum_rate"
+      - "expr": |
+          sum(container_memory_usage_bytes{job="kubernetes-cadvisor", image!="", container_name!=""}) by (kubernetes_namespace)
+        "record": "kubernetes_namespace:container_memory_usage_bytes:sum"
+      - "expr": |
+          sum by (kubernetes_namespace, label_name) (
+             sum(rate(container_cpu_usage_seconds_total{job="kubernetes-cadvisor", image!="", container_name!=""}[5m])) by (kubernetes_namespace, pod_name)
+           * on (kubernetes_namespace, pod_name) group_left(label_name)
+             label_replace(kube_pod_labels{job="kubernetes-service-endpoints-with-tls"}, "pod_name", "$1", "pod", "(.*)")
+          )
+        "record": "kubernetes_namespace_name:container_cpu_usage_seconds_total:sum_rate"
+      - "expr": |
+          sum by (kubernetes_namespace, label_name) (
+            sum(container_memory_usage_bytes{job="kubernetes-cadvisor",image!="", container_name!=""}) by (pod_name, kubernetes_namespace)
+          * on (kubernetes_namespace, pod_name) group_left(label_name)
+            label_replace(kube_pod_labels{job="kubernetes-service-endpoints-with-tls"}, "pod_name", "$1", "pod", "(.*)")
+          )
+        "record": "kubernetes_namespace_name:container_memory_usage_bytes:sum"
+      - "expr": |
+          sum by (kubernetes_namespace, label_name) (
+            sum(kube_pod_container_resource_requests_memory_bytes{job="kubernetes-service-endpoints-with-tls"}) by (kubernetes_namespace, pod)
+          * on (kubernetes_namespace, pod) group_left(label_name)
+            label_replace(kube_pod_labels{job="kubernetes-service-endpoints-with-tls"}, "pod_name", "$1", "pod", "(.*)")
+          )
+        "record": "kubernetes_namespace_name:kube_pod_container_resource_requests_memory_bytes:sum"
+      - "expr": |
+          sum by (kubernetes_namespace, label_name) (
+            sum(kube_pod_container_resource_requests_cpu_cores{job="kubernetes-service-endpoints-with-tls"} and on(pod) kube_pod_status_scheduled{condition="true"}) by (kubernetes_namespace, pod)
+          * on (kubernetes_namespace, pod) group_left(label_name)
+            label_replace(kube_pod_labels{job="kubernetes-service-endpoints-with-tls"}, "pod_name", "$1", "pod", "(.*)")
+          )
+        "record": "kubernetes_namespace_name:kube_pod_container_resource_requests_cpu_cores:sum"
+    - "name": "kube-apiserver.rules"
+      "rules": 
+      - "expr": |
+          histogram_quantile(0.99, sum(rate(apiserver_request_latencies_bucket{job="kubernetes-apiservers"}[5m])) without(instance, pod)) / 1e+06
+        "labels": 
+          "quantile": "0.99"
+        "record": "cluster_quantile:apiserver_request_latencies:histogram_quantile"
+      - "expr": |
+          histogram_quantile(0.9, sum(rate(apiserver_request_latencies_bucket{job="kubernetes-apiservers"}[5m])) without(instance, pod)) / 1e+06
+        "labels": 
+          "quantile": "0.9"
+        "record": "cluster_quantile:apiserver_request_latencies:histogram_quantile"
+      - "expr": |
+          histogram_quantile(0.5, sum(rate(apiserver_request_latencies_bucket{job="kubernetes-apiservers"}[5m])) without(instance, pod)) / 1e+06
+        "labels": 
+          "quantile": "0.5"
+        "record": "cluster_quantile:apiserver_request_latencies:histogram_quantile"
+    - "name": "node.rules"
+      "rules": 
+      - "expr": "sum(min(kube_pod_info) by (node))"
+        "record": ":kube_pod_info_node_count:"
+      - "expr": |
+          max(label_replace(kube_pod_info{job="kubernetes-service-endpoints-with-tls"}, "pod", "$1", "pod", "(.*)")) by (node, kubernetes_namespace, pod)
+        "record": "node_kubernetes_namespace_pod:kube_pod_info:"
+      - "expr": |
+          count by (node) (sum by (node, cpu) (
+            node_cpu_seconds_total{job="node-exporter-endpoints-with-tls"}
+          * on (kubernetes_namespace, pod) group_left(node)
+            node_kubernetes_namespace_pod:kube_pod_info:
+          ))
+        "record": "node:node_num_cpu:sum"
+      - "expr": |
+          1 - avg(rate(node_cpu_seconds_total{job="node-exporter-endpoints-with-tls",mode="idle"}[2m]))
+        "record": ":node_cpu_utilisation:avg1m"
+      - "expr": |
+          1 - avg by (node) (
+            rate(node_cpu_seconds_total{job="node-exporter-endpoints-with-tls",mode="idle"}[2m])
+          * on (kubernetes_namespace, pod) group_left(node)
+            node_kubernetes_namespace_pod:kube_pod_info:)
+        "record": "node:node_cpu_utilisation:avg1m"
+      - "expr": |
+          sum(node_load1{job="node-exporter-endpoints-with-tls"})
+          /
+          sum(node:node_num_cpu:sum)
+        "record": ":node_cpu_saturation_load1:"
+      - "expr": |
+          sum by (node) (
+            node_load1{job="node-exporter-endpoints-with-tls"}
+          * on (kubernetes_namespace, pod) group_left(node)
+            node_kubernetes_namespace_pod:kube_pod_info:
+          )
+          /
+          node:node_num_cpu:sum
+        "record": "node:node_cpu_saturation_load1:"
+      - "expr": |
+          1 -
+          sum(node_memory_MemFree_bytes{job="node-exporter-endpoints-with-tls"} + node_memory_Cached_bytes{job="node-exporter-endpoints-with-tls"} + node_memory_Buffers_bytes{job="node-exporter-endpoints-with-tls"})
+          /
+          sum(node_memory_MemTotal_bytes{job="node-exporter-endpoints-with-tls"})
+        "record": ":node_memory_utilisation:"
+      - "expr": |
+          sum(node_memory_MemFree_bytes{job="node-exporter-endpoints-with-tls"} + node_memory_Cached_bytes{job="node-exporter-endpoints-with-tls"} + node_memory_Buffers_bytes{job="node-exporter-endpoints-with-tls"})
+        "record": ":node_memory_MemFreeCachedBuffers_bytes:sum"
+      - "expr": |
+          sum(node_memory_MemTotal_bytes{job="node-exporter-endpoints-with-tls"})
+        "record": ":node_memory_MemTotal_bytes:sum"
+      - "expr": |
+          sum by (node) (
+            (node_memory_MemFree_bytes{job="node-exporter-endpoints-with-tls"} + node_memory_Cached_bytes{job="node-exporter-endpoints-with-tls"} + node_memory_Buffers_bytes{job="node-exporter-endpoints-with-tls"})
+            * on (kubernetes_namespace, pod) group_left(node)
+              node_kubernetes_namespace_pod:kube_pod_info:
+          )
+        "record": "node:node_memory_bytes_available:sum"
+      - "expr": |
+          sum by (node) (
+            node_memory_MemTotal_bytes{job="node-exporter-endpoints-with-tls"}
+            * on (kubernetes_namespace, pod) group_left(node)
+              node_kubernetes_namespace_pod:kube_pod_info:
+          )
+        "record": "node:node_memory_bytes_total:sum"
+      - "expr": |
+          (node:node_memory_bytes_total:sum - node:node_memory_bytes_available:sum)
+          /
+          scalar(sum(node:node_memory_bytes_total:sum))
+        "record": "node:node_memory_utilisation:ratio"
+      - "expr": |
+          1e3 * sum(
+            (rate(node_vmstat_pgpgin{job="node-exporter-endpoints-with-tls"}[2m])
+           + rate(node_vmstat_pgpgout{job="node-exporter-endpoints-with-tls"}[2m]))
+          )
+        "record": ":node_memory_swap_io_bytes:sum_rate"
+      - "expr": |
+          1 -
+          sum by (node) (
+            (node_memory_MemFree_bytes{job="node-exporter-endpoints-with-tls"} + node_memory_Cached_bytes{job="node-exporter-endpoints-with-tls"} + node_memory_Buffers_bytes{job="node-exporter-endpoints-with-tls"})
+          * on (kubernetes_namespace, pod) group_left(node)
+            node_kubernetes_namespace_pod:kube_pod_info:
+          )
+          /
+          sum by (node) (
+            node_memory_MemTotal_bytes{job="node-exporter-endpoints-with-tls"}
+          * on (kubernetes_namespace, pod) group_left(node)
+            node_kubernetes_namespace_pod:kube_pod_info:
+          )
+        "record": "node:node_memory_utilisation:"
+      - "expr": |
+          1 - (node:node_memory_bytes_available:sum / node:node_memory_bytes_total:sum)
+        "record": "node:node_memory_utilisation_2:"
+      - "expr": |
+          1e3 * sum by (node) (
+            (rate(node_vmstat_pgpgin{job="node-exporter-endpoints-with-tls"}[2m])
+           + rate(node_vmstat_pgpgout{job="node-exporter-endpoints-with-tls"}[2m]))
+           * on (kubernetes_namespace, pod) group_left(node)
+             node_kubernetes_namespace_pod:kube_pod_info:
+          )
+        "record": "node:node_memory_swap_io_bytes:sum_rate"
+      - "expr": |
+          avg(irate(node_disk_io_time_seconds_total{job="node-exporter-endpoints-with-tls",device=~"(sd|xvd|nvme).+"}[2m]))
+        "record": ":node_disk_utilisation:avg_irate"
+      - "expr": |
+          avg by (node) (
+            irate(node_disk_io_time_seconds_total{job="node-exporter-endpoints-with-tls",device=~"(sd|xvd|nvme).+"}[2m])
+          * on (kubernetes_namespace, pod) group_left(node)
+            node_kubernetes_namespace_pod:kube_pod_info:
+          )
+        "record": "node:node_disk_utilisation:avg_irate"
+      - "expr": |
+          avg(irate(node_disk_io_time_weighted_seconds_total{job="node-exporter-endpoints-with-tls",device=~"(sd|xvd|nvme).+"}[2m]) / 1e3)
+        "record": ":node_disk_saturation:avg_irate"
+      - "expr": |
+          avg by (node) (
+            irate(node_disk_io_time_weighted_seconds_total{job="node-exporter-endpoints-with-tls",device=~"(sd|xvd|nvme).+"}[2m]) / 1e3
+          * on (kubernetes_namespace, pod) group_left(node)
+            node_kubernetes_namespace_pod:kube_pod_info:
+          )
+        "record": "node:node_disk_saturation:avg_irate"
+      - "expr": |
+          max by (kubernetes_namespace, pod, device) ((node_filesystem_size_bytes{fstype=~"ext[234]|btrfs|xfs|zfs"}
+          - node_filesystem_avail_bytes{fstype=~"ext[234]|btrfs|xfs|zfs"})
+          / node_filesystem_size_bytes{fstype=~"ext[234]|btrfs|xfs|zfs"})
+        "record": "node:node_filesystem_usage:"
+      - "expr": |
+          max by (kubernetes_namespace, pod, device) (node_filesystem_avail_bytes{fstype=~"ext[234]|btrfs|xfs|zfs"} / node_filesystem_size_bytes{fstype=~"ext[234]|btrfs|xfs|zfs"})
+        "record": "node:node_filesystem_avail:"
+      - "expr": |
+          sum(irate(node_network_receive_bytes_total{job="node-exporter-endpoints-with-tls",device="ens160"}[2m])) +
+          sum(irate(node_network_transmit_bytes_total{job="node-exporter-endpoints-with-tls",device="ens160"}[2m]))
+        "record": ":node_net_utilisation:sum_irate"
+      - "expr": |
+          sum by (node) (
+            (irate(node_network_receive_bytes_total{job="node-exporter-endpoints-with-tls",device="ens160"}[2m]) +
+            irate(node_network_transmit_bytes_total{job="node-exporter-endpoints-with-tls",device="ens160"}[2m]))
+          * on (kubernetes_namespace, pod) group_left(node)
+            node_kubernetes_namespace_pod:kube_pod_info:
+          )
+        "record": "node:node_net_utilisation:sum_irate"
+      - "expr": |
+          sum(irate(node_network_receive_drop_total{job="node-exporter-endpoints-with-tls",device="ens160"}[2m])) +
+          sum(irate(node_network_transmit_drop_total{job="node-exporter-endpoints-with-tls",device="ens160"}[2m]))
+        "record": ":node_net_saturation:sum_irate"
+      - "expr": |
+          sum by (node) (
+            (irate(node_network_receive_drop_total{job="node-exporter-endpoints-with-tls",device="ens160"}[2m]) +
+            irate(node_network_transmit_drop_total{job="node-exporter-endpoints-with-tls",device="ens160"}[2m]))
+          * on (kubernetes_namespace, pod) group_left(node)
+            node_kubernetes_namespace_pod:kube_pod_info:
+          )
+        "record": "node:node_net_saturation:sum_irate"

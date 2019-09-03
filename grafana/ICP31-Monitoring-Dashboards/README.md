@@ -17,6 +17,8 @@ Click on the links below to see sample dashboard snaphots.
 ## Configuration
 
 ### Import recording rules
+
+#### ICP 3.1
 Add the following [recording rules](https://prometheus.io/docs/prometheus/latest/configuration/recording_rules/) to the `monitoring-prometheus-alertrules` ConfigMap: [recording-rules.yml](recording-rules.yml). 
 
 Example ConfigMap: 
@@ -24,6 +26,13 @@ Example ConfigMap:
 
 After a couple of minutes, verify the new recording rules have been properly imported by Prometheus. Use Prometheus UI: `https://<icp_ip>:8443/prometheus/rules` and scroll down to recording rules.
 ![](rules.png)
+
+#### ICP 3.1.2 and 3.2
+Import the following `AlertRules` [definition](ICPrecordingRulesForDashboards.yml) using:
+
+```
+kubectl apply -f ICPrecordingRulesForDashboards.yml
+```
 
 ### Add pod label to prometheus metrics for kubernetes endpoints
 Edit Prometheus ConfigMap using:
