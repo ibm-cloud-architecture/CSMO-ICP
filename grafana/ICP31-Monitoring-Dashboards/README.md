@@ -24,15 +24,17 @@ Add the following [recording rules](https://prometheus.io/docs/prometheus/latest
 Example ConfigMap: 
 [monitoring-prometheus-alertrules-cm-rec-rules.yml](monitoring-prometheus-alertrules-cm-rec-rules.yml)
 
-After a couple of minutes, verify the new recording rules have been properly imported by Prometheus. Use Prometheus UI: `https://<icp_ip>:8443/prometheus/rules` and scroll down to recording rules.
-![](rules.png)
-
 #### ICP 3.1.2 and 3.2
 Import the following `AlertRules` [definition](ICPrecordingRulesForDashboards.yml) using:
 
 ```
 kubectl apply -f ICPrecordingRulesForDashboards.yml
 ```
+
+After a couple of minutes, verify the new recording rules have been properly imported by Prometheus. Use Prometheus UI: `https://<icp_ip>:8443/prometheus/rules` and scroll down to recording rules.
+![](rules.png)
+
+
 
 ### Add pod label to prometheus metrics for kubernetes endpoints
 Edit Prometheus ConfigMap using:
