@@ -25,6 +25,21 @@ Example ConfigMap:
 After a couple of minutes, verify the new recording rules have been properly imported by Prometheus. Use Prometheus UI: `https://<icp_ip>:8443/prometheus/rules` and scroll down to recording rules.
 ![](rules.png)
 
+### Add pod label to prometheus metrics for kubernetes endpoints
+Edit Prometheus ConfigMap using:
+
+```
+kc edit cm monitoring-prometheus -n kube-system
+```
+
+and add the following `relabel_configs` statement for `job_name: 'node-exporter-endpoints-with-tls'`:
+
+```yaml
+          - source_labels: [__meta_kubernetes_pod_name]
+            action: replace
+            target_label: pod
+```
+
 ### Import Grafana dashboards
 [Import](http://docs.grafana.org/reference/export_import/#importing-a-dashboard) the following dashboards to the ICP Grafana.
 
