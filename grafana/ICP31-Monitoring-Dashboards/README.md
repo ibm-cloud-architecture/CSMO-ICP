@@ -29,7 +29,7 @@ After a couple of minutes, verify the new recording rules have been properly imp
 Edit Prometheus ConfigMap using:
 
 ```
-kc edit cm monitoring-prometheus -n kube-system
+kubectl edit cm monitoring-prometheus -n kube-system
 ```
 
 and add the following `relabel_configs` statement for `job_name: 'node-exporter-endpoints-with-tls'`:
