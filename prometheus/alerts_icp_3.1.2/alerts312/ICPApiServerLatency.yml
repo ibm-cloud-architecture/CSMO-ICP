@@ -9,8 +9,7 @@ spec:
       - name: ICPApiServerLatency
         rules:
           - alert: ICPApiServerLatency
-            expr: histogram_quantile(0.99, sum without(instance, resource) (apiserver_request_latencies_bucket{verb!~"CONNECT|WATCHLIST|WATCH|PROXY"}))
-                  / 1e+06 > 1
+            expr: histogram_quantile(0.99, sum by(le) (rate(apiserver_request_latencies_bucket{verb!~"CONNECT|WATCHLIST|WATCH|PROXY"}[10m]))) / 1e+06 > 1
             for: 10m
             labels:
               severity: warning
